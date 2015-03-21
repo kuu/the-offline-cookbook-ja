@@ -100,7 +100,7 @@ self.addEventListener('install', function(event) {
 
 > **Ideal for:** Bigger resources that aren't needed straight away, such as assets for later levels of a game.
 
-**このパターンが適するのは：**リソースのサイズが大きく、かつアプリケーションの動作に直接必要ない場合。例えば、ゲームの後半のレベルで使用されるアセット等。
+**このパターンが適するのは：**サイズが大きく、直接アプリケーションの動作に必要ないリソース。例えば、ゲームの後半のレベルで使用されるアセット等。
 
 ```js
 self.addEventListener('install', function(event) {
