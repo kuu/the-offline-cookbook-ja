@@ -15,28 +15,28 @@ For a working demo of some of these patterns, see [Trained-to-thrill](https://ja
 
 **Contents**
 
-1. The cache machine - when to store resources
- 1. On install - as a dependency
- 2. On install - not as a dependency
- 3. On activate
- 4. On user interaction
- 5. On network response
- 6. Stale-while-revalidate
- 7. On push message
- 8. On background-sync
-2. Cache persistence
-3. Serving suggestions - responding to requests
- 1. Cache only
- 2. Network only
- 3. Cache, falling back to network
- 4. Cache & network race
- 5. Network falling back to cache
- 6. Cache then network
- 7. Generic fallback
- 8. ServiceWorker-side templating
-4. Putting it together
+1. [The cache machine - when to store resources](#the-cache-machine-when-to-store-resources)
+ 1. [On install - as a dependency](#on-install-as-a-dependency)
+ 2. [On install - not as a dependency](#on-install-not-as-a-dependency)
+ 3. [On activate](#on-activate)
+ 4. [On user interaction](#on-user-interaction)
+ 5. [On network response](#on-network-response)
+ 6. [Stale-while-revalidate](#stale-while-revalidate)
+ 7. [On push message](#on-push-message)
+ 8. [On background-sync](#on-background-sync)
+2. [Cache persistence](#cache-persistence)
+3. [Serving suggestions - responding to requests](#serving-suggestions-responding-to-requests)
+ 1. [Cache only](#cache-only)
+ 2. [Network only](#network-only)
+ 3. [Cache, falling back to network](#cache-falling-back-to-network)
+ 4. [Cache & network race](#cache-network-race)
+ 5. [Network falling back to cache](#network-falling-back-to-cache)
+ 6. [Cache then network](#cache-then-network)
+ 7. [Generic fallback](#generic-fallback)
+ 8. [ServiceWorker-side templating](#serviceworker-side-templating)
+4. [Putting it together](#putting-it-together)
 
-##The cache machine - when to store resources
+##<a name="the-cache-machine-when-to-store-resources"></a>The cache machine - when to store resources
 
 ServiceWorker lets you handle requests independently from caching, so we'll look at them separately. First up, caching, when should it be done?
 
@@ -70,7 +70,7 @@ self.addEventListener('install', function(event) {
 
 On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [cache static assets](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L3).
 
-###On install - not as a dependency
+###<a name="on-install-not-as-a-dependency"></a>On install - not as a dependency
 
 ![On install - not as a dependency](images/02-On-install-not-as-a-dependency.png)
 
@@ -97,7 +97,7 @@ We're not passing the `cache.addAll` promise for levels 11-100 back to `event.wa
 
 Also, the ServiceWorker may be killed while levels 11-100 download since it's finished handling events, but the download will continue in the background.
 
-###On activate
+###<a name="on-activate"></a>On activate
 
 ![On activate](images/03-On-activate.png)
 
@@ -127,7 +127,7 @@ During activation, other events such as `fetch` are put into a queue, so a long 
 
 On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [remove old caches](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L17).
 
-###On user interaction
+###<a name="on-user-interaction"></a>On user interaction
 
 ![On user interaction](images/04-On-user-interaction.png)
 
@@ -183,7 +183,7 @@ To allow for efficient memory usage, you can only read a response/request's body
 
 On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [cache Flickr images](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L109).
 
-###Stale-while-revalidate
+###<a name="stale-while-revalidate"></a>Stale-while-revalidate
 
 ![Stale-while-revalidate](images/06-Stale-while-revalidate.png)
 
@@ -209,7 +209,7 @@ self.addEventListener('fetch', function(event) {
 
 This is very similar to HTTP's [stale-while-revalidate](https://www.mnot.net/blog/2007/12/12/stale).
 
-###On push message
+###<a name="on-push-message"></a>On push message
 
 ![On push message](images/07-On-push-message.png)
 
@@ -256,7 +256,7 @@ self.addEventListener('notificationclick', function(event) {
 });
 ```
 
-###On background-sync
+###<a name="on-background-sync"></a>On background-sync
 
 ![On background-sync](images/08-On-background-sync.png)
 
@@ -278,7 +278,7 @@ self.addEventListener('sync', function(event) {
 });
 ```
 
-##Cache persistence
+##<a name="cache-persistence"></a>Cache persistence
 
 Your origin is given a certain amount of free space to do what it wants with. That free space is shared between all origin storage: LocalStorage, IndexedDB, Filesystem, and of course Caches.
 
@@ -308,11 +308,11 @@ Of course, the user has to grant permission. Making the user part of this flow i
 
 For this to work, it requires operating systems to treat "durable" origins as equivalent to native apps in their breakdowns of storage usage, rather than reporting the browser as a single item.
 
-##Serving suggestions - responding to requests
+##<a name="serving-suggestions-responding-to-requests"></a>Serving suggestions - responding to requests
 
 It doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:
 
-###Cache only
+###<a name="cache-only"></a>Cache only
 
 ![Cache only](images/09-Cache-only.png)
 
@@ -328,7 +328,7 @@ self.addEventListener('fetch', function(event) {
 
 …although you don't often need to handle this case specifically, ["Cache, falling back to network"](#cache-falling-back-to-network) covers it.
 
-###Network only
+###<a name="network-only"></a>Network only
 
 ![Network only](images/10-Network-only.png)
 
@@ -362,7 +362,7 @@ self.addEventListener('fetch', function(event) {
 
 This gives you the "Cache only" behaviour for things in the cache and the "Network only" behaviour for anything not-cached (which includes all non-GET requests, as they cannot be cached).
 
-###Cache & network race
+###<a name="cache-network-race"></a>Cache & network race
 
 ![Cache & network race](images/12-Cache-and-network-race.png)
 
@@ -402,7 +402,7 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-###Network falling back to cache
+###<a name="network-falling-back-to-cache"></a>Network falling back to cache
 
 ![Network falling back to cache](images/13-Network-falling-back-to-cache.png)
 
@@ -485,7 +485,7 @@ The above doesn't work in Chrome yet, as we've yet to expose fetch and caches to
 
 In [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I worked around this by using [XHR instead of fetch](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/utils.js#L3), and abusing the Accept header to tell the ServiceWorker where to get the result from ([page code](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/index.js#L70), [ServiceWorker code](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L61)).
 
-###Generic fallback
+###<a name="generic-fallback"></a>Generic fallback
 
 ![Generic fallback](images/15-Generic-fallback.png)
 
@@ -515,7 +515,7 @@ The item you fallback to is likely to be an [install dependency](#on-install-as-
 
 If your page is posting an email, your ServiceWorker may fall back to storing the email in an IDB 'outbox' & respond letting the page know that the send failed but the data was successfully retained.
 
-###ServiceWorker-side templating
+###<a name="serviceworker-side-templating"></a>ServiceWorker-side templating
 
 ![ServiceWorker-side templating](images/16-ServiceWorker-side-templating.png)
 
@@ -551,7 +551,7 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-##Putting it together
+##<a name="putting-it-together"></a>Putting it together
 
 You don't have to pick one of these methods, you'll likely use many of them depending on request URL. For example, [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) uses:
 
@@ -610,7 +610,7 @@ self.addEventListener('fetch', function(event) {
 
 If you come up with additional patterns, throw them at me in the comments!
 
-##Credits
+##<a name=""></a>Credits
 
 …for the lovely icons:
 
@@ -626,7 +626,7 @@ If you come up with additional patterns, throw them at me in the comments!
 
 And thanks to [Jeff Posnick](https://twitter.com/jeffposnick) for catching many howling errors before I hit "publish".
 
-##Further reading
+##<a name=""></a>Further reading
 
 * [Intro to ServiceWorkers](http://www.html5rocks.com/en/tutorials/service-worker/introduction/)
 * [Is ServiceWorker ready?](https://jakearchibald.github.io/isserviceworkerready/) - track the implementation status across the main browsers
