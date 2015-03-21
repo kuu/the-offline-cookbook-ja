@@ -23,28 +23,28 @@ _投稿日：2014年12月9日_
 
 **目次**
 
-1. [キャッシュ書き込みの８つのシナリオ](#the-cache-machine-when-to-store-resources)
- 1. [シナリオ１：On install - as a dependency](#on-install-as-a-dependency)
- 2. [シナリオ２：On install - not as a dependency](#on-install-not-as-a-dependency)
- 3. [シナリオ３：On activate](#on-activate)
- 4. [シナリオ４：On user interaction](#on-user-interaction)
- 5. [シナリオ５：On network response](#on-network-response)
- 6. [シナリオ６：Stale-while-revalidate](#stale-while-revalidate)
- 7. [シナリオ７：On push message](#on-push-message)
- 8. [シナリオ８：On background-sync](#on-background-sync)
+1. [キャッシュ書き込みの８つのパターン](#the-cache-machine-when-to-store-resources)
+ 1. [パターン１：On install - as a dependency](#on-install-as-a-dependency)
+ 2. [パターン２：On install - not as a dependency](#on-install-not-as-a-dependency)
+ 3. [パターン３：On activate](#on-activate)
+ 4. [パターン４：On user interaction](#on-user-interaction)
+ 5. [パターン５：On network response](#on-network-response)
+ 6. [パターン６：Stale-while-revalidate](#stale-while-revalidate)
+ 7. [パターン７：On push message](#on-push-message)
+ 8. [パターン８：On background-sync](#on-background-sync)
 2. [キャッシュの持続性](#cache-persistence)
-3. [リクエスト処理の８つのシナリオ](#serving-suggestions-responding-to-requests)
- 1. [シナリオ１：Cache only](#cache-only)
- 2. [シナリオ２：Network only](#network-only)
- 3. [シナリオ３：Cache, falling back to network](#cache-falling-back-to-network)
- 4. [シナリオ４：Cache & network race](#cache-network-race)
- 5. [シナリオ５：Network falling back to cache](#network-falling-back-to-cache)
- 6. [シナリオ６：Cache then network](#cache-then-network)
- 7. [シナリオ７：Generic fallback](#generic-fallback)
- 8. [シナリオ８：ServiceWorker-side templating](#serviceworker-side-templating)
+3. [リクエスト処理の８つのパターン](#serving-suggestions-responding-to-requests)
+ 1. [パターン１：Cache only](#cache-only)
+ 2. [パターン２：Network only](#network-only)
+ 3. [パターン３：Cache, falling back to network](#cache-falling-back-to-network)
+ 4. [パターン４：Cache & network race](#cache-network-race)
+ 5. [パターン５：Network falling back to cache](#network-falling-back-to-cache)
+ 6. [パターン６：Cache then network](#cache-then-network)
+ 7. [パターン７：Generic fallback](#generic-fallback)
+ 8. [パターン８：ServiceWorker-side templating](#serviceworker-side-templating)
 4. [まとめ](#putting-it-together)
 
-##<a name="the-cache-machine-when-to-store-resources"></a>キャッシュ書き込みの８つのシナリオ
+##<a name="the-cache-machine-when-to-store-resources"></a>キャッシュ書き込みの８つのパターン
 
 > ServiceWorker lets you handle requests independently from caching, so we'll look at them separately. First up, caching, when should it be done?
 
@@ -320,7 +320,7 @@ Of course, the user has to grant permission. Making the user part of this flow i
 
 For this to work, it requires operating systems to treat "durable" origins as equivalent to native apps in their breakdowns of storage usage, rather than reporting the browser as a single item.
 
-##<a name="serving-suggestions-responding-to-requests"></a>リクエスト処理の８つのシナリオ
+##<a name="serving-suggestions-responding-to-requests"></a>リクエスト処理の８つのパターン
 
 It doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:
 
