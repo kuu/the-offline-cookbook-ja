@@ -7,7 +7,7 @@ _投稿日：2014年12月9日_
 
 When AppCache arrived on the scene it gave us a couple of patterns to make content work offline. If those were the patterns you needed, congratulations, you won the AppCache lottery (the jackpot remains unclaimed), but the rest of us were left huddled in a corner [rocking back & forth](http://alistapart.com/article/application-cache-is-a-douchebag).
 
-With ServiceWorker ([intro](http://www.html5rocks.com/en/tutorials/service-worker/introduction/)) we gave up trying to solve offline, and gave developers the moving parts to go solve it themselves. It gives you control over caching and how requests are handled. That means you get to create your own patterns. Let's take a look at a few possible patterns in isolation, but in practice you'll likely use many of them in tandem depending on URL & context.
+With ServiceWorker ([intro](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)) we gave up trying to solve offline, and gave developers the moving parts to go solve it themselves. It gives you control over caching and how requests are handled. That means you get to create your own patterns. Let's take a look at a few possible patterns in isolation, but in practice you'll likely use many of them in tandem depending on URL & context.
 
 All code examples work today in [Chrome 40 beta](https://www.google.com/chrome/browser/beta.html) with the [cache polyfill](https://github.com/coonsta/cache-polyfill), unless otherwise noted. This stuff will land into the stable version January/February 2015 barring any emergencies, so it won't be long until millions of real users can benefit from this stuff.
 
@@ -628,6 +628,6 @@ And thanks to [Jeff Posnick](https://twitter.com/jeffposnick) for catching many 
 
 ##<a name=""></a>Further reading
 
-* [Intro to ServiceWorkers](http://www.html5rocks.com/en/tutorials/service-worker/introduction/)
+* [Intro to ServiceWorkers](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)
 * [Is ServiceWorker ready?](https://jakearchibald.github.io/isserviceworkerready/) - track the implementation status across the main browsers
-* [JavaScript promises, there and back again](http://www.html5rocks.com/en/tutorials/es6/promises/) - guide to promises
+* [JavaScript promises, there and back again](http://www.html5rocks.com/ja/tutorials/es6/promises/) - guide to promises
