@@ -123,7 +123,7 @@ self.addEventListener('install', function(event) {
 
 > Also, the ServiceWorker may be killed while levels 11-100 download since it's finished handling events, but the download will continue in the background.
 
-また、"levels 11-100"のデータ取得中にService Workerが強制終了する場合もあります。これは"levels 11-100"以外のデータを取得し終えた時点でイベント処理は完了したとみなされるからです。この場合、Service Workerが終了しても"levels 11-100"のダウンロードはバックグラウンドで継続します。
+また、"levels 11-100"のデータ取得中にService Workerが強制終了する場合もあります。これは"levels 11-100"以外のデータをキャッシュに保存した時点でイベント処理は完了したとみなされるからです。この場合、Service Workerが終了しても"levels 11-100"のダウンロードはバックグラウンドで継続します。
 
 ###<a name="on-activate"></a>On activate
 
