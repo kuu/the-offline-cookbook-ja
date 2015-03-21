@@ -239,9 +239,13 @@ self.addEventListener('fetch', function(event) {
 
 ![Stale-while-revalidate](images/06-Stale-while-revalidate.png)
 
-**Ideal for:** Frequently updating resources where having the very latest version is non-essential. Avatars can fall into this category.
+> **Ideal for:** Frequently updating resources where having the very latest version is non-essential. Avatars can fall into this category.
 
-If there's a cached version available, use it, but fetch an update for next time.
+**このパターンが適するのは：**頻繁に更新されるが必ずしも最新のバージョンである必要がないリソース。アバターはこれに該当する。
+
+> If there's a cached version available, use it, but fetch an update for next time.
+
+このパターンでは、リクエストされたリソースがキャッシュに見つかった場合は、それを使用すると同時に、次回のリクエストに備えてネットワークからも取得しておきます。
 
 ```js
 self.addEventListener('fetch', function(event) {
@@ -259,7 +263,9 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-This is very similar to HTTP's [stale-while-revalidate](https://www.mnot.net/blog/2007/12/12/stale).
+> This is very similar to HTTP's [stale-while-revalidate](https://www.mnot.net/blog/2007/12/12/stale).
+
+このパターンはHTTPの[stale-while-revalidate](https://www.mnot.net/blog/2007/12/12/stale)と非常に似ています。
 
 ###<a name="on-push-message"></a>On push message
 
