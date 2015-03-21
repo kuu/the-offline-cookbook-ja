@@ -24,8 +24,8 @@ _投稿日：2014年12月9日_
 **目次**
 
 1. [キャッシュ更新の８つのパターン](#the-cache-machine-when-to-store-resources)
- 1. [パターン１：`install`イベント時に依存ファイルとしてキャッシュに保存する](#on-install-as-a-dependency)
- 2. [パターン２：`install`イベント時に非依存ファイルとしてキャッシュに保存する](#on-install-not-as-a-dependency)
+ 1. [パターン１：`install`イベント時に依存ファイルをキャッシュに保存する](#on-install-as-a-dependency)
+ 2. [パターン２：`install`イベント時に非依存ファイルをキャッシュに保存する](#on-install-not-as-a-dependency)
  3. [パターン３：On activate](#on-activate)
  4. [パターン４：On user interaction](#on-user-interaction)
  5. [パターン５：On network response](#on-network-response)
@@ -50,7 +50,7 @@ _投稿日：2014年12月9日_
 
 Service Workerでは、リクエストとキャッシュは独立したものとして扱われます。本記事でもそれらを分けて説明します。まずはキャッシュに関して、どのタイミングでキャッシュを書き込むかという点に着目し、いくつかのパターンを考えましょう。
 
-###<a name="on-install-as-a-dependency"></a>パターン１：`install`イベント時に依存ファイルとしてキャッシュに保存する
+###<a name="on-install-as-a-dependency"></a>パターン１：`install`イベント時に依存ファイルをキャッシュに保存する
 
 ![On install - as a dependency](images/01-On-install-as-a-dependency.png)
 
@@ -90,7 +90,7 @@ self.addEventListener('install', function(event) {
 
 サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、すべての静的なアセットを`install`イベントでキャッシュに保存しています。
 
-###<a name="on-install-not-as-a-dependency"></a>パターン２：`install`イベント時に非依存ファイルとしてキャッシュに保存する
+###<a name="on-install-not-as-a-dependency"></a>パターン２：`install`イベント時に非依存ファイルをキャッシュに保存する
 
 ![On install - not as a dependency](images/02-On-install-not-as-a-dependency.png)
 
