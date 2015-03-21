@@ -7,9 +7,11 @@ _投稿日：2014年12月9日_
 
 > When AppCache arrived on the scene it gave us a couple of patterns to make content work offline. If those were the patterns you needed, congratulations, you won the AppCache lottery (the jackpot remains unclaimed), but the rest of us were left huddled in a corner [rocking back & forth](http://alistapart.com/article/application-cache-is-a-douchebag).
 
-最初に登場したのはアプリケーションキャッシュ（AppCache）でした。AppCacheはコンテンツをオフラインでアクセスするための２つのデザインパターンを提供します。もしそれらのパターンがあなたのニーズに一致していたとしたら、あなたはとてもラッキーです。それは宝くじに当たったも同然なのですから。（未だに当選者は現れていませんが。）一方、アンラッキーな残りの大多数である我々は、どうすればよいのか分からずに部屋の片隅で[右往左往](http://alistapart.com/article/application-cache-is-a-douchebag)するばかりです。
+最初に登場したのはアプリケーションキャッシュ（AppCache）でした。AppCacheはコンテンツをオフラインでアクセスするための２つのパターンを提供します。もしそれらのパターンがあなたのニーズに一致していたとしたら、あなたはとてもラッキーです。なぜなら、それは宝くじに当たったも同然なのですから。（未だに当選者は現れていませんが。）一方、アンラッキーな残りの大多数である我々は、どうすればよいのか分からずに部屋の片隅で[右往左往](http://alistapart.com/article/application-cache-is-a-douchebag)するばかりです。
 
-With ServiceWorker ([intro](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)) we gave up trying to solve offline, and gave developers the moving parts to go solve it themselves. It gives you control over caching and how requests are handled. That means you get to create your own patterns. Let's take a look at a few possible patterns in isolation, but in practice you'll likely use many of them in tandem depending on URL & context.
+> With ServiceWorker ([intro](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)) we gave up trying to solve offline, and gave developers the moving parts to go solve it themselves. It gives you control over caching and how requests are handled. That means you get to create your own patterns. Let's take a look at a few possible patterns in isolation, but in practice you'll likely use many of them in tandem depending on URL & context.
+
+そして[Service Worker](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)が登場しました。Service Workerでは、ブラウザはオフライン機能そのものを提供するのではなく、アプリケーションの開発者が自身で問題を解決できるように、低レベルな部品を提供することに努めます。それにより、開発者はキャッシュやリクエスト処理をより細かくコントロールできるようになったのです。それはまた、開発者自身がデザインパターンを考えなければならないことを意味します。この記事では、考えられるパターンをひとつづつ取り上げて見ていきます。実際にはアプリケーションのURLやコンテキストに基づいて、複数のパターンを組み合わせて使用することになると思います。
 
 All code examples work today in [Chrome 40 beta](https://www.google.com/chrome/browser/beta.html) with the [cache polyfill](https://github.com/coonsta/cache-polyfill), unless otherwise noted. This stuff will land into the stable version January/February 2015 barring any emergencies, so it won't be long until millions of real users can benefit from this stuff.
 
