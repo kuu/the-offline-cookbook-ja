@@ -129,7 +129,7 @@ self.addEventListener('install', function(event) {
 
 ![On activate](images/03-On-activate.png)
 
-**Ideal for:** Clean-up & migration.
+> **Ideal for:** Clean-up & migration.
 
 **このパターンが適するのは：**キャッシュの後片付け、およびIndexedDBのスキーマのマイグレーション。
 
