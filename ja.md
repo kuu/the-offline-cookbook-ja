@@ -26,7 +26,7 @@ _投稿日：2014年12月9日_
 1. [キャッシュ更新の８つのパターン](#the-cache-machine-when-to-store-resources)
  1. [パターン１：`install`イベント時に依存ファイルをキャッシュに保存する](#on-install-as-a-dependency)
  2. [パターン２：`install`イベント時に非依存ファイルをキャッシュに保存する](#on-install-not-as-a-dependency)
- 3. [パターン３：`activate`イベント時に不要なファイルを削除する](#on-activate)
+ 3. [パターン３：`activate`イベント時に不要なファイルをキャッシュから削除する](#on-activate)
  4. [パターン４：On user interaction](#on-user-interaction)
  5. [パターン５：On network response](#on-network-response)
  6. [パターン６：Stale-while-revalidate](#stale-while-revalidate)
@@ -125,7 +125,7 @@ self.addEventListener('install', function(event) {
 
 また、"levels 11-100"のデータ取得中にService Workerが強制終了する場合もあります。これは"levels 11-100"以外のデータをキャッシュに保存した時点でイベント処理は完了したとみなされるからです。この場合、Service Workerが終了しても"levels 11-100"のダウンロードはバックグラウンドで継続します。
 
-###<a name="on-activate"></a>パターン３：`activate`イベント時に不要なファイルを削除する
+###<a name="on-activate"></a>パターン３：`activate`イベント時に不要なファイルをキャッシュから削除する
 
 ![On activate](images/03-On-activate.png)
 
