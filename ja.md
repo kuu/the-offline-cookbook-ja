@@ -620,7 +620,7 @@ If you come up with additional patterns, throw them at me in the comments!
 * [SD](http://thenounproject.com/term/sd-card/6185/) by Thomas Le Bas
 * [CPU](http://thenounproject.com/term/cpu/72043/) by iconsmind.com
 * [Trash](http://thenounproject.com/term/trash/20538/) by trasnik
-* [Notification](http://thenounproject.com/term/notification/32514/) by @daosme
+* [Notification](http://thenounproject.com/term/notification/32514/) by [@daosme](http://thenounproject.com/flylion/)
 * [Layout](http://thenounproject.com/term/layout/36872/) by Mister Pixel
 * [Cloud](http://thenounproject.com/term/cloud/2788/) by P.J. Onori
 
