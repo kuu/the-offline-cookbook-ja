@@ -82,9 +82,13 @@ self.addEventListener('install', function(event) {
 });
 ```
 
-`event.waitUntil` takes a promise to define the length & success of the install. If the promise rejects, the installation is considered a failure and this ServiceWorker will be abandoned (if an older version is running, it'll be left intact). `caches.open` and `cache.addAll` return promises. If any of the resources fail to fetch, the `cache.addAll` call rejects.
+> `event.waitUntil` takes a promise to define the length & success of the install. If the promise rejects, the installation is considered a failure and this ServiceWorker will be abandoned (if an older version is running, it'll be left intact). `caches.open` and `cache.addAll` return promises. If any of the resources fail to fetch, the `cache.addAll` call rejects.
 
-On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [cache static assets](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L3).
+`event.waitUntil`はPromiseオブジェクトを受け取ります。このPromiseオブジェクトではインストールの一連の処理が定義されます。もしPromiseがrejectされた場合、インストールは失敗し、Service Workerはインストールされません。（古いバージョンのService Workerがあれば、それは影響を受けません。）`cache.open`と`cache.addAll`はどちらもPromiseオブジェクトを返します。ここで取得するリソースのうち、ひとつでも取得に失敗すれば、`cache.addAll`の呼び出しはrejectされます。
+
+> On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [cache static assets](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L3).
+
+サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、`install`イベントですべてのスタティックなアセットをキャッシュしています。
 
 ###<a name="on-install-not-as-a-dependency"></a>On install - not as a dependency
 
