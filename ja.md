@@ -117,9 +117,13 @@ self.addEventListener('install', function(event) {
 });
 ```
 
-We're not passing the `cache.addAll` promise for levels 11-100 back to `event.waitUntil`, so even if it fails, the game will still be available offline. Of course, you'll have to cater for the possible absence of those levels & reattempt caching them if they're missing.
+> We're not passing the `cache.addAll` promise for levels 11-100 back to `event.waitUntil`, so even if it fails, the game will still be available offline. Of course, you'll have to cater for the possible absence of those levels & reattempt caching them if they're missing.
 
-Also, the ServiceWorker may be killed while levels 11-100 download since it's finished handling events, but the download will continue in the background.
+ここでは`cache.addAll`を２回呼び出してますが、前者の"levels 11-100"の方は戻り値のPromiseオブジェクトを`event.waitUntil`に渡していません。これにより、もし"levels 11-100"のデータが取得できなくても、Service Workerはインストールされ、アプリケーションはオフラインで動作します。もちろん、アプリケーションはそれらのデータが取得できなかった場合を想定した作りになっている必要があります。
+
+> Also, the ServiceWorker may be killed while levels 11-100 download since it's finished handling events, but the download will continue in the background.
+
+また、"levels 11-100"のデータ取得中にService Workerが強制終了する場合もあります。これは"levels 11-100"以外のデータを取得し終えた時点でイベント処理は完了したとみなされるからです。この場合、Service Workerが終了しても"levels 11-100"のダウンロードはバックグラウンドで継続します。
 
 ###<a name="on-activate"></a>On activate
 
