@@ -241,7 +241,7 @@ self.addEventListener('fetch', function(event) {
 
 > **Ideal for:** Frequently updating resources where having the very latest version is non-essential. Avatars can fall into this category.
 
-**このパターンが適するのは：**頻繁に更新されるが必ずしも最新のバージョンである必要がないリソース。アバターはこれに該当する。
+**このパターンが適するのは：**頻繁に更新されるが、必ずしも最新のバージョンである必要がないリソース。アバターはこれに該当する。
 
 > If there's a cached version available, use it, but fetch an update for next time.
 
