@@ -60,7 +60,7 @@ Service Worker は`install`イベントを受け取ります。`install`イベ�
 
 > **Ideal for:** CSS, images, fonts, JS, templates… basically anything you'd consider static to that "version" of your site.
 
-**このパターンが適するのは：**アプリケーションの特定のバージョンを構成するCSS、画像、フォント、JavaScript、テンプレート等、基本的にすべてのスタティックなファイル。
+**このパターンが適するのは：**アプリケーションの特定のバージョンを構成するCSS、画像、フォント、JavaScript、テンプレート等、基本的にすべての静的なファイル。
 
 > These are things that would make your site entirely non-functional if they failed to fetch, things an equivalent native-app would make part of the initial download.
 
@@ -88,7 +88,7 @@ self.addEventListener('install', function(event) {
 
 > On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [cache static assets](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L3).
 
-サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、すべてのスタティックなアセットを`install`イベントでキャッシュに保存しています。
+サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、すべての静的なアセットを`install`イベントでキャッシュに保存しています。
 
 ###<a name="on-install-not-as-a-dependency"></a>パターン２：`install`イベント時に非依存ファイルとしてキャッシュに保存する
 
