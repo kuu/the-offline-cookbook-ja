@@ -58,9 +58,13 @@ Service Workerでは、リクエストとキャッシュは独立したものと
 
 Service Worker は`install`イベントを受け取ります。`install`イベントでは、他のイベントを処理する前にやっておくべき準備を行います。ここで注意しないといけないことは、Service Wrokerが更新されたとき、`install`イベントの時点では、まだ古いService Workerによりページが提供されているということです。つまり、`install`イベントで行う処理が、現在のページの動作に影響を与えないように注意する必要があります。
 
-**Ideal for:** CSS, images, fonts, JS, templates… basically anything you'd consider static to that "version" of your site.
+> **Ideal for:** CSS, images, fonts, JS, templates… basically anything you'd consider static to that "version" of your site.
 
-These are things that would make your site entirely non-functional if they failed to fetch, things an equivalent native-app would make part of the initial download.
+**このパターンが適するのは：**アプリケーションの特定のバージョンを構成するCSS、画像、フォント、JavaScript、テンプレート等、基本的にすべてのスタティックなファイル。
+
+> These are things that would make your site entirely non-functional if they failed to fetch, things an equivalent native-app would make part of the initial download.
+
+これらのファイルはアプリケーションにとって必要不可欠なものであり、ネイティブアプリのインストーラに含まれるファイルと同等です。
 
 ```js
 self.addEventListener('install', function(event) {
