@@ -23,7 +23,7 @@ _投稿日：2014年12月9日_
 
 **目次**
 
-1. [キャッシュ書き込みの８つのパターン](#the-cache-machine-when-to-store-resources)
+1. [キャッシュ更新の８つのパターン](#the-cache-machine-when-to-store-resources)
  1. [パターン１：`install`イベント時に依存ファイルとしてキャッシュに保存する](#on-install-as-a-dependency)
  2. [パターン２：`install`イベント時に非依存ファイルとしてキャッシュに保存する](#on-install-not-as-a-dependency)
  3. [パターン３：On activate](#on-activate)
@@ -44,7 +44,7 @@ _投稿日：2014年12月9日_
  8. [パターン８：ServiceWorker-side templating](#serviceworker-side-templating)
 4. [まとめ](#putting-it-together)
 
-##<a name="the-cache-machine-when-to-store-resources"></a>キャッシュ書き込みの８つのパターン
+##<a name="the-cache-machine-when-to-store-resources"></a>キャッシュ更新の８つのパターン
 
 > ServiceWorker lets you handle requests independently from caching, so we'll look at them separately. First up, caching, when should it be done?
 
