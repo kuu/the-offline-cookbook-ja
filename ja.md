@@ -94,9 +94,13 @@ self.addEventListener('install', function(event) {
 
 ![On install - not as a dependency](images/02-On-install-not-as-a-dependency.png)
 
-Similar to above, but won't delay install completing and won't cause installation to fail if caching fails.
+> Similar to above, but won't delay install completing and won't cause installation to fail if caching fails.
 
-**Ideal for:** Bigger resources that aren't needed straight away, such as assets for later levels of a game.
+パターン１に似ていますが、インストール完了まで待たず、またキャッシュ保存が失敗してもインストール自体は失敗しない点が異なります。
+
+> **Ideal for:** Bigger resources that aren't needed straight away, such as assets for later levels of a game.
+
+**このパターンが適するのは：**リソースのサイズが大きく、かつアプリケーションの動作に直接必要ない場合。例えば、ゲームの後半のレベルで使用されるアセット等。
 
 ```js
 self.addEventListener('install', function(event) {
