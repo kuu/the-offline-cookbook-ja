@@ -26,7 +26,7 @@ _投稿日：2014年12月9日_
 1. [キャッシュ更新の８つのパターン](#the-cache-machine-when-to-store-resources)
  1. [パターン１：`install`イベント時に依存ファイルをキャッシュに保存する](#on-install-as-a-dependency)
  2. [パターン２：`install`イベント時に非依存ファイルをキャッシュに保存する](#on-install-not-as-a-dependency)
- 3. [パターン３：On activate](#on-activate)
+ 3. [パターン３：`activate`イベント時に不要なファイルを削除する](#on-activate)
  4. [パターン４：On user interaction](#on-user-interaction)
  5. [パターン５：On network response](#on-network-response)
  6. [パターン６：Stale-while-revalidate](#stale-while-revalidate)
@@ -125,13 +125,17 @@ self.addEventListener('install', function(event) {
 
 また、"levels 11-100"のデータ取得中にService Workerが強制終了する場合もあります。これは"levels 11-100"以外のデータをキャッシュに保存した時点でイベント処理は完了したとみなされるからです。この場合、Service Workerが終了しても"levels 11-100"のダウンロードはバックグラウンドで継続します。
 
-###<a name="on-activate"></a>On activate
+###<a name="on-activate"></a>パターン３：`activate`イベント時に不要なファイルを削除する
 
 ![On activate](images/03-On-activate.png)
 
 **Ideal for:** Clean-up & migration.
 
-Once a new ServiceWorker has installed & a previous version isn't being used, the new one activates, and you get an activate event. Because the old version is out of the way, it's a good time to handle schema migrations in IndexedDB and also delete unused caches.
+**このパターンが適するのは：キャッシュの後片付け、およびIndexDBのスキーマのマイグレーション。
+
+> Once a new ServiceWorker has installed & a previous version isn't being used, the new one activates, and you get an activate event. Because the old version is out of the way, it's a good time to handle schema migrations in IndexedDB and also delete unused caches.
+
+ひとたびService Workerがインストールされて、古いバージョンのService Workerにより提供されていたページが閉じられると、新しいバージョンのService Workerに対して`activate`イベントが発行されます。古いバージョンはもう二度と使用されることはないため、ここで不要なキャッシュの削除や、IndexedDBのスキーマのマイグレーションの処理を行います。
 
 ```js
 self.addEventListener('activate', function(event) {
