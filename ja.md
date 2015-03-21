@@ -13,30 +13,30 @@ All code examples work today in [Chrome 40 beta](https://www.google.com/chrome/b
 
 For a working demo of some of these patterns, see [Trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/), and [this video](https://www.youtube.com/watch?v=px-J9Ghvcx4) showing the performance impact.
 
-**Contents**
+**目次**
 
-1. [The cache machine - when to store resources](#the-cache-machine-when-to-store-resources)
- 1. [On install - as a dependency](#on-install-as-a-dependency)
- 2. [On install - not as a dependency](#on-install-not-as-a-dependency)
- 3. [On activate](#on-activate)
- 4. [On user interaction](#on-user-interaction)
- 5. [On network response](#on-network-response)
- 6. [Stale-while-revalidate](#stale-while-revalidate)
- 7. [On push message](#on-push-message)
- 8. [On background-sync](#on-background-sync)
-2. [Cache persistence](#cache-persistence)
-3. [Serving suggestions - responding to requests](#serving-suggestions-responding-to-requests)
- 1. [Cache only](#cache-only)
- 2. [Network only](#network-only)
- 3. [Cache, falling back to network](#cache-falling-back-to-network)
- 4. [Cache & network race](#cache-network-race)
- 5. [Network falling back to cache](#network-falling-back-to-cache)
- 6. [Cache then network](#cache-then-network)
- 7. [Generic fallback](#generic-fallback)
- 8. [ServiceWorker-side templating](#serviceworker-side-templating)
-4. [Putting it together](#putting-it-together)
+1. [キャッシュ書き込みの８つのシナリオ](#the-cache-machine-when-to-store-resources)
+ 1. [シナリオ１：On install - as a dependency](#on-install-as-a-dependency)
+ 2. [シナリオ２：On install - not as a dependency](#on-install-not-as-a-dependency)
+ 3. [シナリオ３：On activate](#on-activate)
+ 4. [シナリオ４：On user interaction](#on-user-interaction)
+ 5. [シナリオ５：On network response](#on-network-response)
+ 6. [シナリオ６：Stale-while-revalidate](#stale-while-revalidate)
+ 7. [シナリオ７：On push message](#on-push-message)
+ 8. [シナリオ８：On background-sync](#on-background-sync)
+2. [キャッシュの持続性](#cache-persistence)
+3. [キャッシュ読み出しの８つのシナリオ](#serving-suggestions-responding-to-requests)
+ 1. [シナリオ１：Cache only](#cache-only)
+ 2. [シナリオ２：Network only](#network-only)
+ 3. [シナリオ３：Cache, falling back to network](#cache-falling-back-to-network)
+ 4. [シナリオ４：Cache & network race](#cache-network-race)
+ 5. [シナリオ５：Network falling back to cache](#network-falling-back-to-cache)
+ 6. [シナリオ６：Cache then network](#cache-then-network)
+ 7. [シナリオ７：Generic fallback](#generic-fallback)
+ 8. [シナリオ８：ServiceWorker-side templating](#serviceworker-side-templating)
+4. [まとめ](#putting-it-together)
 
-##<a name="the-cache-machine-when-to-store-resources"></a>The cache machine - when to store resources
+##<a name="the-cache-machine-when-to-store-resources"></a>キャッシュ書き込みの８つのシナリオ
 
 ServiceWorker lets you handle requests independently from caching, so we'll look at them separately. First up, caching, when should it be done?
 
@@ -278,7 +278,7 @@ self.addEventListener('sync', function(event) {
 });
 ```
 
-##<a name="cache-persistence"></a>Cache persistence
+##<a name="cache-persistence"></a>キャッシュの持続性
 
 Your origin is given a certain amount of free space to do what it wants with. That free space is shared between all origin storage: LocalStorage, IndexedDB, Filesystem, and of course Caches.
 
@@ -308,7 +308,7 @@ Of course, the user has to grant permission. Making the user part of this flow i
 
 For this to work, it requires operating systems to treat "durable" origins as equivalent to native apps in their breakdowns of storage usage, rather than reporting the browser as a single item.
 
-##<a name="serving-suggestions-responding-to-requests"></a>Serving suggestions - responding to requests
+##<a name="serving-suggestions-responding-to-requests"></a>キャッシュ読み出しの８つのシナリオ
 
 It doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:
 
@@ -551,7 +551,7 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-##<a name="putting-it-together"></a>Putting it together
+##<a name="putting-it-together"></a>まとめ
 
 You don't have to pick one of these methods, you'll likely use many of them depending on request URL. For example, [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) uses:
 
@@ -610,7 +610,7 @@ self.addEventListener('fetch', function(event) {
 
 If you come up with additional patterns, throw them at me in the comments!
 
-##<a name=""></a>Credits
+##<a name=""></a>著作権
 
 …for the lovely icons:
 
@@ -626,7 +626,7 @@ If you come up with additional patterns, throw them at me in the comments!
 
 And thanks to [Jeff Posnick](https://twitter.com/jeffposnick) for catching many howling errors before I hit "publish".
 
-##<a name=""></a>Further reading
+##<a name=""></a>参考文献
 
 * [Intro to ServiceWorkers](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)
 * [Is ServiceWorker ready?](https://jakearchibald.github.io/isserviceworkerready/) - track the implementation status across the main browsers
