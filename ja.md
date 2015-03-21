@@ -33,7 +33,7 @@ _投稿日：2014年12月9日_
  7. [シナリオ７：On push message](#on-push-message)
  8. [シナリオ８：On background-sync](#on-background-sync)
 2. [キャッシュの持続性](#cache-persistence)
-3. [キャッシュ読み出しの８つのシナリオ](#serving-suggestions-responding-to-requests)
+3. [リクエスト処理の８つのシナリオ](#serving-suggestions-responding-to-requests)
  1. [シナリオ１：Cache only](#cache-only)
  2. [シナリオ２：Network only](#network-only)
  3. [シナリオ３：Cache, falling back to network](#cache-falling-back-to-network)
@@ -46,13 +46,17 @@ _投稿日：2014年12月9日_
 
 ##<a name="the-cache-machine-when-to-store-resources"></a>キャッシュ書き込みの８つのシナリオ
 
-ServiceWorker lets you handle requests independently from caching, so we'll look at them separately. First up, caching, when should it be done?
+> ServiceWorker lets you handle requests independently from caching, so we'll look at them separately. First up, caching, when should it be done?
+
+Service Workerでは、リクエストとキャッシュは独立したものとして扱われます。本記事でもそれらを分けて説明します。まずはキャッシュに関して、どのタイミングでキャッシュを書き込むかという点に着目し、いくつかのパターンを考えましょう。
 
 ###<a name="on-install-as-a-dependency"></a>On install - as a dependency
 
 ![On install - as a dependency](images/01-On-install-as-a-dependency.png)
 
-ServiceWorker gives you an install event. You can use this to get stuff ready, stuff that must be ready before you handle other events. While this happens any previous version of your ServiceWorker is still running & serving pages, so the things you do here mustn't disrupt that.
+> ServiceWorker gives you an install event. You can use this to get stuff ready, stuff that must be ready before you handle other events. While this happens any previous version of your ServiceWorker is still running & serving pages, so the things you do here mustn't disrupt that.
+
+Service Worker は`install`イベントを受け取ります。`install`イベントでは、他のイベントを処理する前にやっておくべき準備を行います。ここで注意しないといけないことは、Service Wrokerが更新されたとき、`install`イベントの時点では、まだ古いService Workerによりページが提供されているということです。つまり、`install`イベントで行う処理が、現在のページの動作に影響を与えないように注意する必要があります。
 
 **Ideal for:** CSS, images, fonts, JS, templates… basically anything you'd consider static to that "version" of your site.
 
@@ -316,7 +320,7 @@ Of course, the user has to grant permission. Making the user part of this flow i
 
 For this to work, it requires operating systems to treat "durable" origins as equivalent to native apps in their breakdowns of storage usage, rather than reporting the browser as a single item.
 
-##<a name="serving-suggestions-responding-to-requests"></a>キャッシュ読み出しの８つのシナリオ
+##<a name="serving-suggestions-responding-to-requests"></a>リクエスト処理の８つのシナリオ
 
 It doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:
 
