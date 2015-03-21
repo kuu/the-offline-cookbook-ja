@@ -28,7 +28,7 @@ _投稿日：2014年12月9日_
  2. [パターン２：`install`イベント時に非依存ファイルをキャッシュに保存する](#on-install-not-as-a-dependency)
  3. [パターン３：`activate`イベント時に不要なファイルをキャッシュから削除する](#on-activate)
  4. [パターン４：ユーザーの操作によりファイルをキャッシュに保存する](#on-user-interaction)
- 5. [パターン５：On network response](#on-network-response)
+ 5. [パターン５：通信のたびにレスポンスをキャッシュに保存する](#on-network-response)
  6. [パターン６：Stale-while-revalidate](#stale-while-revalidate)
  7. [パターン７：On push message](#on-push-message)
  8. [パターン８：On background-sync](#on-background-sync)
@@ -196,15 +196,21 @@ document.querySelector('.cache-article').addEventListener('click', function(even
 
 最新のChromeでは[`fetch` API](http://updates.html5rocks.com/2015/03/introduction-to-fetch)が利用可能なので、[Cache polyfill](https://github.com/coonsta/cache-polyfill)と併用することで上記コードは動作します。
 
-###<a name="on-network-response"></a>On network response
+###<a name="on-network-response"></a>パターン５：通信のたびにレスポンスをキャッシュに保存する
 
 ![On network response](images/05-On-network-response.png)
 
-**Ideal for:** Frequently updating resources such as a user's inbox, or article contents. Also useful for non-essential content such as avatars, but care is needed.
+> **Ideal for:** Frequently updating resources such as a user's inbox, or article contents. Also useful for non-essential content such as avatars, but care is needed.
 
-If a request doesn't match anything in the cache, get it from the network, send it to the page & add it to the cache at the same time.
+**このパターンが適するのは：**頻繁に更新されるリソース（例：メールの受信箱やブログ記事）、もしくはアプリケーションに必須ではないコンテンツ（例：アバター）等。ただし、注意が必要。（後述）
 
-If you do this for a range of URLs, such as avatars, you'll need to be careful you don't bloat the storage of your origin — if the user needs to reclaim disk space you don't want to be the prime candidate. Make sure you get rid of items in the cache you don't need any more.
+> If a request doesn't match anything in the cache, get it from the network, send it to the page & add it to the cache at the same time.
+
+このパターンでは、リクエストを処理する際に、キャッシュに見つからなければネットワークから取得し、レスポンスをページに表示するとともにキャッシュにも保存します。
+
+> If you do this for a range of URLs, such as avatars, you'll need to be careful you don't bloat the storage of your origin — if the user needs to reclaim disk space you don't want to be the prime candidate. Make sure you get rid of items in the cache you don't need any more.
+
+しかしながら、このパターンをアバターのような広範囲なURLに対して適用するには注意が必要です。キャッシュに必要なメモリサイズが増加するため、ユーザーがディスクスペースを整理する際に、あなたのアプリケーションは真っ先に削除候補に挙がるでしょう。それを避けるには、不要なキャッシュをこまめに削除しなければいけません。
 
 ```js
 self.addEventListener('fetch', function(event) {
@@ -221,9 +227,13 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-To allow for efficient memory usage, you can only read a response/request's body once. In the code above, [`.clone()`](https://fetch.spec.whatwg.org/#dom-request-clone) is used to create additional copies that can be read separately.
+> To allow for efficient memory usage, you can only read a response/request's body once. In the code above, [`.clone()`](https://fetch.spec.whatwg.org/#dom-request-clone) is used to create additional copies that can be read separately.
 
-On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [cache Flickr images](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L109).
+ここで注意してほしいことは、メモリー使用の最適化のため、`request`および`response`オブジェクトの内容は一回しか読み出せないようになっていることです。上記のコードでは、[`.clone()`](https://fetch.spec.whatwg.org/#dom-request-clone)メソッドを使用することでオブジェクトをコピーして、重複して内容を読み出せるようにしています。
+
+> On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [cache Flickr images](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L109).
+
+サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、[Flickrの画像をキャッシュに保存](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L109)しています。
 
 ###<a name="stale-while-revalidate"></a>Stale-while-revalidate
 
