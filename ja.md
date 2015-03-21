@@ -135,7 +135,7 @@ self.addEventListener('install', function(event) {
 
 > Once a new ServiceWorker has installed & a previous version isn't being used, the new one activates, and you get an activate event. Because the old version is out of the way, it's a good time to handle schema migrations in IndexedDB and also delete unused caches.
 
-ひとたびService Workerがインストールされて、古いバージョンのService Workerにより提供されていたページが閉じられると、新しいバージョンのService Workerに対して`activate`イベントが発行されます。古いバージョンはもう二度と使用されることはないため、ここで不要なキャッシュの削除や、IndexedDBのスキーマのマイグレーションの処理を行います。
+ひとたびService Workerがインストールされて、古いバージョンのService Workerにより提供されていたページが閉じられると、新しいバージョンのService Workerに対して`activate`イベントが発行されます。古いバージョンはもう使用されることはないため、ここで不要なキャッシュの削除や、IndexedDBのスキーマのマイグレーションの処理を行います。
 
 ```js
 self.addEventListener('activate', function(event) {
@@ -155,9 +155,13 @@ self.addEventListener('activate', function(event) {
 });
 ```
 
-During activation, other events such as `fetch` are put into a queue, so a long activation could potentially block page loads. Keep your activation as lean as possible, only use it for things you _couldn't_ do while the old version was active.
+> During activation, other events such as `fetch` are put into a queue, so a long activation could potentially block page loads. Keep your activation as lean as possible, only use it for things you _couldn't_ do while the old version was active.
 
-On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [remove old caches](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L17).
+`activate`イベントを処理している間、他のイベント（`fetch`等）は待たされることになります。つまり、`activate`イベントの処理が長引くと、ページのロードがブロックされる可能性があります。`activate`で行う処理はなるべく手短に済ませるようにし、古いバージョンのService Workerが動作しているときには実行できなかった処理のみをここで行ってください。
+
+> On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [remove old caches](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L17).
+
+サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、不要となったファイルを`activate`イベントでキャッシュから削除しています。
 
 ###<a name="on-user-interaction"></a>On user interaction
 
