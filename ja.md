@@ -131,7 +131,7 @@ self.addEventListener('install', function(event) {
 
 **Ideal for:** Clean-up & migration.
 
-**このパターンが適するのは：キャッシュの後片付け、およびIndexDBのスキーマのマイグレーション。
+**このパターンが適するのは：キャッシュの後片付け、およびIndexedDBのスキーマのマイグレーション。
 
 > Once a new ServiceWorker has installed & a previous version isn't being used, the new one activates, and you get an activate event. Because the old version is out of the way, it's a good time to handle schema migrations in IndexedDB and also delete unused caches.
 
