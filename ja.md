@@ -265,7 +265,7 @@ self.addEventListener('fetch', function(event) {
 
 > This is very similar to HTTP's [stale-while-revalidate](https://www.mnot.net/blog/2007/12/12/stale).
 
-このパターンはHTTPの[stale-while-revalidate](https://www.mnot.net/blog/2007/12/12/stale)と非常に似ています。
+このパターンはHTTPの[stale-while-revalidate](https://www.mnot.net/blog/2007/12/12/stale)とよく似ています。
 
 ###<a name="on-push-message"></a>On push message
 
