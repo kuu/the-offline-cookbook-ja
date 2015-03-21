@@ -28,7 +28,7 @@ _投稿日：2014年12月9日_
  2. [パターン２：`install`イベント時に非依存ファイルをキャッシュに保存する](#on-install-not-as-a-dependency)
  3. [パターン３：`activate`イベント時に不要なファイルをキャッシュから削除する](#on-activate)
  4. [パターン４：ユーザーの操作によりファイルをキャッシュに保存する](#on-user-interaction)
- 5. [パターン５：通信のたびにレスポンスをキャッシュに保存する](#on-network-response)
+ 5. [パターン５：`fetch`イベント時にレスポンスをキャッシュに保存する](#on-network-response)
  6. [パターン６：Stale-while-revalidate](#stale-while-revalidate)
  7. [パターン７：On push message](#on-push-message)
  8. [パターン８：On background-sync](#on-background-sync)
@@ -196,7 +196,7 @@ document.querySelector('.cache-article').addEventListener('click', function(even
 
 最新のChromeでは[`fetch` API](http://updates.html5rocks.com/2015/03/introduction-to-fetch)が利用可能なので、[Cache polyfill](https://github.com/coonsta/cache-polyfill)と併用することで上記コードは動作します。
 
-###<a name="on-network-response"></a>パターン５：通信のたびにレスポンスをキャッシュに保存する
+###<a name="on-network-response"></a>パターン５：`fetch`イベント時にレスポンスをキャッシュに保存する
 
 ![On network response](images/05-On-network-response.png)
 
