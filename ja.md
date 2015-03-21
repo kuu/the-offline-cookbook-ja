@@ -15,7 +15,7 @@ _投稿日：2014年12月9日_
 
 > All code examples work today in [Chrome 40 beta](https://www.google.com/chrome/browser/beta.html) with the [cache polyfill](https://github.com/coonsta/cache-polyfill), unless otherwise noted. This stuff will land into the stable version January/February 2015 barring any emergencies, so it won't be long until millions of real users can benefit from this stuff.
 
-記事中のすべてのサンプルコードは、特に言及しない限り Chrome 40以降と [cache APIのポリフィル](https://github.com/coonsta/cache-polyfill)を使って動作させることができます。
+記事中のすべてのサンプルコードは、特に言及しない限り Chrome 40以降と [Cache polyfill](https://github.com/coonsta/cache-polyfill)を使って動作させることができます。
 
 > For a working demo of some of these patterns, see [Trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/), and [this video](https://www.youtube.com/watch?v=px-J9Ghvcx4) showing the performance impact.
 
@@ -27,7 +27,7 @@ _投稿日：2014年12月9日_
  1. [パターン１：`install`イベント時に依存ファイルをキャッシュに保存する](#on-install-as-a-dependency)
  2. [パターン２：`install`イベント時に非依存ファイルをキャッシュに保存する](#on-install-not-as-a-dependency)
  3. [パターン３：`activate`イベント時に不要なファイルをキャッシュから削除する](#on-activate)
- 4. [パターン４：On user interaction](#on-user-interaction)
+ 4. [パターン４：ユーザーの操作によりファイルをキャッシュに保存する](#on-user-interaction)
  5. [パターン５：On network response](#on-network-response)
  6. [パターン６：Stale-while-revalidate](#stale-while-revalidate)
  7. [パターン７：On push message](#on-push-message)
@@ -163,13 +163,17 @@ self.addEventListener('activate', function(event) {
 
 サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、不要となったファイルを`activate`イベントで[キャッシュから削除しています](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L17)。
 
-###<a name="on-user-interaction"></a>On user interaction
+###<a name="on-user-interaction"></a>ユーザーの操作によりファイルをキャッシュに保存する
 
 ![On user interaction](images/04-On-user-interaction.png)
 
-**Ideal for:** If the whole site can't be taken offline, you may allow the user to select the content they want available offline. E.g. a video on something like YouTube, an article on Wikipedia, a particular gallery on Flickr.
+> **Ideal for:** If the whole site can't be taken offline, you may allow the user to select the content they want available offline. E.g. a video on something like YouTube, an article on Wikipedia, a particular gallery on Flickr.
 
-Give the user a "Read later" or "Save for offline" button. When it's clicked, fetch what you need from the network & pop it in the cache.
+**このパターンが適するのは：**アプリケーション全体をオフラインで利用可能にするのが現実的でない場合、オフラインで利用したいコンテンツをユーザーに選択させる。例えば、YouTubeの動画、Wikipediaの記事、Flickrのギャラリー等において、特定なコンテンツのみをキャッシュに保存する。
+
+> Give the user a "Read later" or "Save for offline" button. When it's clicked, fetch what you need from the network & pop it in the cache.
+
+このパターンでは、ユーザーに「後で読む」ボタンや「オフライン視聴向けに保存」ボタン等のUIを提供して、ネットワークからファイルを読み込み、キャッシュに保存します。
 
 ```js
 document.querySelector('.cache-article').addEventListener('click', function(event) {
@@ -188,7 +192,9 @@ document.querySelector('.cache-article').addEventListener('click', function(even
 });
 ```
 
-The above doesn't work in Chrome yet, as we've yet to expose fetch and caches to pages ([ticket #1](https://code.google.com/p/chromium/issues/detail?id=436770), [ticket #2](https://code.google.com/p/chromium/issues/detail?id=439389)). You could use navigator.serviceWorker.controller.postMessage to [send a signal to the ServiceWorker](https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/post-message) telling it which article to cache, and handle the rest there.
+> The above doesn't work in Chrome yet, as we've yet to expose fetch and caches to pages ([ticket #1](https://code.google.com/p/chromium/issues/detail?id=436770), [ticket #2](https://code.google.com/p/chromium/issues/detail?id=439389)). You could use navigator.serviceWorker.controller.postMessage to [send a signal to the ServiceWorker](https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/post-message) telling it which article to cache, and handle the rest there.
+
+最新のChromeでは[`fetch` API](http://updates.html5rocks.com/2015/03/introduction-to-fetch)が利用可能なので、[Cache polyfill](https://github.com/coonsta/cache-polyfill)と併用することで上記コードは動作します。
 
 ###<a name="on-network-response"></a>On network response
 
