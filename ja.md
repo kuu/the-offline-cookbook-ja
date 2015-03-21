@@ -15,7 +15,7 @@ _投稿日：2014年12月9日_
 
 > All code examples work today in [Chrome 40 beta](https://www.google.com/chrome/browser/beta.html) with the [cache polyfill](https://github.com/coonsta/cache-polyfill), unless otherwise noted. This stuff will land into the stable version January/February 2015 barring any emergencies, so it won't be long until millions of real users can benefit from this stuff.
 
-記事中のすべてのサンプルコードは、特に言及しない限り Chrome 40以降および[cache APIのポリフィル](https://github.com/coonsta/cache-polyfill)で動作します。
+記事中のすべてのサンプルコードは、特に言及しない限り Chrome 40以降と [cache APIのポリフィル](https://github.com/coonsta/cache-polyfill)を使って動作させることができます。
 
 > For a working demo of some of these patterns, see [Trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/), and [this video](https://www.youtube.com/watch?v=px-J9Ghvcx4) showing the performance impact.
 
