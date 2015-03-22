@@ -289,9 +289,13 @@ self.addEventListener('fetch', function(event) {
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=0i7YdSEQI1w" target="_blank"><img src="http://img.youtube.com/vi/0i7YdSEQI1w/0.jpg" alt="Push messaging without caching" width="740" height="555" border="10" /></a>
 
-Without a connection, Twitter fails to provide the content relating to the push message. Tapping it does remove the notification however, leaving the user with less information than before they tapped. Don't do this!
+> Without a connection, Twitter fails to provide the content relating to the push message. Tapping it does remove the notification however, leaving the user with less information than before they tapped. Don't do this!
 
-This code updates caches before showing a notification:
+ネットワークに繋がっていない状態だと、TwitterはPush通知のコンテンツを表示できません。しかも、タップすることでPush通知は削除されます。これではPush通知をタップしたことでユーザーは情報を失ったことになります。決してこのようなUIにならないよう気をつけてください。
+
+> This code updates caches before showing a notification:
+
+以下のコードはPush通知を表示する前にコンテンツをキャッシュに保存しています。
 
 ```js
 self.addEventListener('push', function(event) {
