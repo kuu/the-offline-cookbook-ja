@@ -194,7 +194,7 @@ document.querySelector('.cache-article').addEventListener('click', function(even
 
 > The above doesn't work in Chrome yet, as we've yet to expose fetch and caches to pages ([ticket #1](https://code.google.com/p/chromium/issues/detail?id=436770), [ticket #2](https://code.google.com/p/chromium/issues/detail?id=439389)). You could use navigator.serviceWorker.controller.postMessage to [send a signal to the ServiceWorker](https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/post-message) telling it which article to cache, and handle the rest there.
 
-最新のChromeでは[`fetch` API](http://updates.html5rocks.com/2015/03/introduction-to-fetch)が利用可能なので、[Cache polyfill](https://github.com/coonsta/cache-polyfill)と併用することで上記コードは動作します。
+`fetch`と`cache`はChromeでまだ実装されていないため、上記のコードは動きません。関連するチケットは、[ticket #1](https://code.google.com/p/chromium/issues/detail?id=436770)および[ticket #2](https://code.google.com/p/chromium/issues/detail?id=439389)です。その代わり、`navigator.serviceWorker.controller.postMessage`を使って[Service Workerにメッセージを送ることが可能です](https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/post-message)。（※訳注：[`fetch` API](http://updates.html5rocks.com/2015/03/introduction-to-fetch)は Chrome 42で実装されました。）
 
 ###<a name="on-network-response"></a>パターン５：`fetch`イベント時にレスポンスをキャッシュに保存する
 
