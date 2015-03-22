@@ -31,7 +31,7 @@ _投稿日：2014年12月9日_
  5. [パターン５：`fetch`イベント時にレスポンスをキャッシュに保存する](#on-network-response)
  6. [パターン６：`stale-while-revalidate`パターン](#stale-while-revalidate)
  7. [パターン７：Push通知](#on-push-message)
- 8. [パターン８：On background-sync](#on-background-sync)
+ 8. [パターン８：バックグラウンド同期](#on-background-sync)
 2. [キャッシュの持続性](#cache-persistence)
 3. [リクエスト処理の８つのパターン](#serving-suggestions-responding-to-requests)
  1. [パターン１：Cache only](#cache-only)
@@ -326,15 +326,21 @@ self.addEventListener('notificationclick', function(event) {
 });
 ```
 
-###<a name="on-background-sync"></a>On background-sync
+###<a name="on-background-sync"></a>バックグラウンド同期
 
 ![On background-sync](images/08-On-background-sync.png)
 
-**Note:** Background sync isn't supported in Chrome yet.
+> **Note:** Background sync isn't supported in Chrome yet.
 
-[Background sync](https://github.com/slightlyoff/BackgroundSync/blob/master/explainer.md) is another feature built on top of ServiceWorker. It allows you to request background data synchronisation as a one-off, or on an (extremely heuristic) interval. This happens even when the user doesn't have a tab open to your site, only the ServiceWorker is woken up. You request permission to do this from a page & the user will be prompted.
+**Note:** バックグラウンド同期はChromeではまだサポートされていません。
 
-**Ideal for:** Non-urgent updates, especially those that happen so regularly that a push message per update would be too frequent, such as social timelines or news articles.
+> [Background sync](https://github.com/slightlyoff/BackgroundSync/blob/master/explainer.md) is another feature built on top of ServiceWorker. It allows you to request background data synchronisation as a one-off, or on an (extremely heuristic) interval. This happens even when the user doesn't have a tab open to your site, only the ServiceWorker is woken up. You request permission to do this from a page & the user will be prompted.
+
+[バックグラウンド同期](https://github.com/slightlyoff/BackgroundSync/blob/master/explainer.md)もまた、Service Workerを利用して実現される新たな機能です。これにより、アプリケーションはバックグラウンドでデータを同期することが可能になります。バックグラウンド同期は一回限り、もしくは非常に長い周期で実施されます。このときユーザーがアプリケーションのページをブラウザのタブで開いていなかったとしても、バックグラウンドでService Workerが起動されます。アプリケーションはバックグラウンド同期を実施することをあらかじめユーザーに伝えて許可を得る必要があります。
+
+> **Ideal for:** Non-urgent updates, especially those that happen so regularly that a push message per update would be too frequent, such as social timelines or news articles.
+
+**このパターンが適するのは：**同期の緊急度が高くないコンテンツ。特に、SNSのタイムラインやニュースの記事等、更新されるたびにPush通知を送るまでもないコンテンツ。
 
 ```js
 self.addEventListener('sync', function(event) {
