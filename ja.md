@@ -30,7 +30,7 @@ _投稿日：2014年12月9日_
  4. [パターン４：ユーザーの操作によりファイルをキャッシュに保存する](#on-user-interaction)
  5. [パターン５：`fetch`イベント時にレスポンスをキャッシュに保存する](#on-network-response)
  6. [パターン６：`stale-while-revalidate`パターン](#stale-while-revalidate)
- 7. [パターン７：On push message](#on-push-message)
+ 7. [パターン７：Push通知](#on-push-message)
  8. [パターン８：On background-sync](#on-background-sync)
 2. [キャッシュの持続性](#cache-persistence)
 3. [リクエスト処理の８つのパターン](#serving-suggestions-responding-to-requests)
@@ -267,11 +267,11 @@ self.addEventListener('fetch', function(event) {
 
 このパターンはHTTPの[stale-while-revalidate](https://www.mnot.net/blog/2007/12/12/stale)とよく似ています。
 
-###<a name="on-push-message"></a>On push message
+###<a name="on-push-message"></a>Push通知
 
 ![On push message](images/07-On-push-message.png)
 
-**Note:** Push isn't supported in Chrome yet.
+**Note:** Push通知はChromeではまだサポートされていません。（※訳注：Chrome 42で[サポートされました](http://updates.html5rocks.com/2015/03/push-notificatons-on-the-open-web)。）
 
 The [Push API](https://w3c.github.io/push-api/) is another feature built on top of SerivceWorker. This allows the ServiceWorker to be awoken in response to a message from the OS's messaging service. This happens even when the user doesn't have a tab open to your site, only the ServiceWorker is woken up. You request permission to do this from a page & the user will be prompted.
 
