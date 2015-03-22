@@ -29,7 +29,7 @@ _投稿日：2014年12月9日_
  3. [パターン３：`activate`イベント時に不要なファイルをキャッシュから削除する](#on-activate)
  4. [パターン４：ユーザーの操作によりファイルをキャッシュに保存する](#on-user-interaction)
  5. [パターン５：`fetch`イベント時にレスポンスをキャッシュに保存する](#on-network-response)
- 6. [パターン６：Stale-while-revalidate](#stale-while-revalidate)
+ 6. [パターン６：`stale-while-revalidate`パターン](#stale-while-revalidate)
  7. [パターン７：On push message](#on-push-message)
  8. [パターン８：On background-sync](#on-background-sync)
 2. [キャッシュの持続性](#cache-persistence)
@@ -235,7 +235,7 @@ self.addEventListener('fetch', function(event) {
 
 サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、[Flickrの画像をキャッシュに保存](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L109)しています。
 
-###<a name="stale-while-revalidate"></a>Stale-while-revalidate
+###<a name="stale-while-revalidate"></a>パターン６：`stale-while-revalidate`パターン
 
 ![Stale-while-revalidate](images/06-Stale-while-revalidate.png)
 
