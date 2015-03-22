@@ -271,9 +271,13 @@ self.addEventListener('fetch', function(event) {
 
 ![On push message](images/07-On-push-message.png)
 
+> **Note:** Push isn't supported in Chrome yet.
+
 **Note:** Push通知はChromeではまだサポートされていません。（※訳注：Chrome 42で[サポートされました](http://updates.html5rocks.com/2015/03/push-notificatons-on-the-open-web)。）
 
-The [Push API](https://w3c.github.io/push-api/) is another feature built on top of SerivceWorker. This allows the ServiceWorker to be awoken in response to a message from the OS's messaging service. This happens even when the user doesn't have a tab open to your site, only the ServiceWorker is woken up. You request permission to do this from a page & the user will be prompted.
+> The [Push API](https://w3c.github.io/push-api/) is another feature built on top of SerivceWorker. This allows the ServiceWorker to be awoken in response to a message from the OS's messaging service. This happens even when the user doesn't have a tab open to your site, only the ServiceWorker is woken up. You request permission to do this from a page & the user will be prompted.
+
+[Push API](https://w3c.github.io/push-api/)は、Service Workerを利用して実現される新たな機能です。これにより、OSのメッセージングサービス経由でService Workerを起動することが可能になります。このときユーザーがアプリケーションのページをブラウザのタブで開いていなかったとしても、バックグラウンドでService Workerが起動されます。アプリケーションはPush通知を受けることをあらかじめユーザーに伝えて許可を得る必要があります。
 
 **Ideal for:** Content relating to a notification, such as a chat message, a breaking news story, or an email. Also infrequently changing content that benefits from immediate sync, such as a todo list update or a calendar alteration.
 
