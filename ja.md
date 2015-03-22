@@ -283,7 +283,9 @@ self.addEventListener('fetch', function(event) {
 
 **このパターンが適するのは：**通知が必要なコンテンツ、例えばチャットのメッセージや、ニュース速報、新着メール等。また、頻繁に更新されるわけではないが即座に同期することに意味があるコンテンツ、例えばTODOリストやカレンダーアプリ等。
 
-The common final outcome is a notification which, when tapped, opens/focuses a relevant page, but updating caches before this happens is extremely important. The user is obviously online at the time of receiving the push message, but they may not be when they finally interact with the notification, so making this content available offline is important. The Twitter native app, which is for the most part an excellent example of offline-first, gets this a bit wrong:
+> The common final outcome is a notification which, when tapped, opens/focuses a relevant page, but updating caches before this happens is extremely important. The user is obviously online at the time of receiving the push message, but they may not be when they finally interact with the notification, so making this content available offline is important. The Twitter native app, which is for the most part an excellent example of offline-first, gets this a bit wrong:
+
+通常は、Push通知をタップすることで関連するページが開かれますが、ユーザーがタップする前にあらかじめキャッシュを更新しておくことは非常に重要です。Push通知を受け取ったときはユーザーは当然オンラインなのですが、Push通知をタップするときは必ずしもオンラインであるとは限りません。従って、このコンテンツはオフラインで利用可能にするべきなのです。Twitterのネイテイィブアプリはオフラインファーストのすばらしい見本ですが、Push通知のこの要件を満たしていません。
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=0i7YdSEQI1w" target="_blank"><img src="http://img.youtube.com/vi/0i7YdSEQI1w/0.jpg" alt="Push messaging without caching" width="740" height="555" border="10" /></a>
 
