@@ -279,7 +279,9 @@ self.addEventListener('fetch', function(event) {
 
 [Push API](https://w3c.github.io/push-api/)は、Service Workerを利用して実現される新たな機能です。これにより、OSのメッセージングサービス経由でService Workerを起動することが可能になります。このときユーザーがアプリケーションのページをブラウザのタブで開いていなかったとしても、バックグラウンドでService Workerが起動されます。アプリケーションはPush通知を受けることをあらかじめユーザーに伝えて許可を得る必要があります。
 
-**Ideal for:** Content relating to a notification, such as a chat message, a breaking news story, or an email. Also infrequently changing content that benefits from immediate sync, such as a todo list update or a calendar alteration.
+> **Ideal for:** Content relating to a notification, such as a chat message, a breaking news story, or an email. Also infrequently changing content that benefits from immediate sync, such as a todo list update or a calendar alteration.
+
+**このパターンが適するのは：**通知が必要なコンテンツ、例えばチャットのメッセージや、ニュース速報、新着メール等。また、頻繁に更新されるわけではないが即座に同期することに意味があるコンテンツ、例えばTODOリストやカレンダーアプリ等。
 
 The common final outcome is a notification which, when tapped, opens/focuses a relevant page, but updating caches before this happens is extremely important. The user is obviously online at the time of receiving the push message, but they may not be when they finally interact with the notification, so making this content available offline is important. The Twitter native app, which is for the most part an excellent example of offline-first, gets this a bit wrong:
 
