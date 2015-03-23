@@ -631,7 +631,7 @@ self.addEventListener('fetch', function(event) {
 
 > Twitter adds the new content above the old content & adjusts the scroll position so the user is uninterrupted. This is possible because Twitter mostly retains a mostly-linear order to content. I copied this pattern for [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) to get content on screen as fast as possible, but still display up-to-date content once it arrives.
 
-Twitterは古いコンテンツの上に新しいコンテンツを表示して、スクロール位置を調整するため、ユーザーがツイートを読んでいる最中に邪魔が入ることはありません。これは、Twitterのコンテンツはほとんどリニアなデータ構造で順番が管理されているからです。サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、コンテンツの表示時間を短く、かつ最新のコンテンツを表示するために、このパターンを適用しています。
+Twitterは古いコンテンツの上に新しいコンテンツを表示して、スクロール位置を調整するため、ユーザーがツイートを読んでいる最中に邪魔が入ることはありません。これは、Twitterのコンテンツはほとんどリニアなデータ構造で順番が管理されているからです。サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、コンテンツの表示されるまでの時間を短く、かつ新着のコンテンツを表示するために、このパターンを適用しています。
 
 > **Code in the page:**
 
