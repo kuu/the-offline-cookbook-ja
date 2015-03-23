@@ -24,6 +24,29 @@ _投稿日：2014年12月9日_
 
 また、本記事で紹介するいくつかのパターンを実際に使ったアプリケーション[Trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)と、そのパフォーマンスの改善結果がわかる[動画](https://www.youtube.com/watch?v=px-J9Ghvcx4)も参照ください。
 
+> **Contents**
+
+> 1. The cache machine - when to store resources
+>  1. On install - as a dependency
+>  2. On install - not as a dependency
+>  3. On activate
+>  4. On user interaction
+>  5. On network response
+>  6. Stale-while-revalidate
+>  7. On push message
+>  8. On background-sync
+> 2. Cache persistence
+> 3. Serving suggestions - responding to requests
+>  1. Cache only
+>  2. Network only
+>  3. Cache, falling back to network
+>  4. Cache & network race
+>  5. Network falling back to cache
+>  6. Cache then network
+>  7. Generic fallback
+>  8. ServiceWorker-side templating
+> 4. Putting it together
+
 **目次**
 
 1. [キャッシュ更新の８つのパターン](#the-cache-machine-when-to-store-resources)
@@ -47,6 +70,7 @@ _投稿日：2014年12月9日_
  8. [パターン８：ServiceWorker-side templating](#serviceworker-side-templating)
 4. [まとめ](#putting-it-together)
 
+> ##The cache machine - when to store resources
 ##<a name="the-cache-machine-when-to-store-resources"></a>キャッシュ更新の８つのパターン
 
 > ServiceWorker lets you handle requests independently from caching, so we'll look at them separately. First up, caching, when should it be done?
@@ -357,6 +381,8 @@ self.addEventListener('sync', function(event) {
 });
 ```
 
+> ##Cache persistence
+
 ##<a name="cache-persistence"></a>キャッシュの持続性
 
 Your origin is given a certain amount of free space to do what it wants with. That free space is shared between all origin storage: LocalStorage, IndexedDB, Filesystem, and of course Caches.
@@ -386,6 +412,8 @@ navigator.requestStorageDurability().then(function() {
 Of course, the user has to grant permission. Making the user part of this flow is important, as we can now expect them to be in control of deletion. If their device comes under storage pressure, and clearing non-essential data doesn't solve it, the user gets to make a judgement call on which items to keep and remove.
 
 For this to work, it requires operating systems to treat "durable" origins as equivalent to native apps in their breakdowns of storage usage, rather than reporting the browser as a single item.
+
+> ##Serving suggestions - responding to requests
 
 ##<a name="serving-suggestions-responding-to-requests"></a>リクエスト処理の８つのパターン
 
@@ -629,6 +657,8 @@ self.addEventListener('fetch', function(event) {
   );
 });
 ```
+
+>##Putting it together
 
 ##<a name="putting-it-together"></a>まとめ
 
