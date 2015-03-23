@@ -435,10 +435,11 @@ navigator.storageQuota.queryInfo("temporary").then(function(info) {
 こういった問題に対処すべく、[Storage Durability](https://github.com/slightlyoff/StorageDurability/blob/master/explainer.md) APIが提案されました。
 
 ```js
-// From a page:
+// > From a page:
+// Webページのコード：
 navigator.requestStorageDurability().then(function() {
   // > Hurrah, your data is here to stay!
-  // この時点でオリジンのデータは永続的(durable)になりました
+  // 万歳！これでこのオリジンのデータは強制的に削除されなくなりました。
 })
 ```
 
