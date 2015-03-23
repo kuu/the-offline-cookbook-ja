@@ -177,9 +177,12 @@ self.addEventListener('activate', function(event) {
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.filter(function(cacheName) {
-          // Return true if you want to remove this cache,
-          // but remember that caches are shared across
-          // the whole origin
+          // > Return true if you want to remove this cache,
+          // > but remember that caches are shared across
+          // > the whole origin
+          // キャッシュから削除したい場合trueを返します。
+          // キャッシュはすべてのオリジンで共有されている
+          // ことに注意してください。
         }).map(function(cacheName) {
           return caches.delete(cacheName);
         })
