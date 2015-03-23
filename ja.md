@@ -488,6 +488,8 @@ self.addEventListener('fetch', function(event) {
 
 **Ideal for:** If you're building offline-first, this is how you'll handle the majority of requests. Other patterns will be exceptions based on the incoming request.
 
+**このパターンが適するのは：**通常のオフラインファーストなアプリケーションでは、ほとんどのリクエスト処理にこのパターンが適用されます。そして、リクエストによっては例外的に他のパターンを適用します。
+
 ```js
 self.addEventListener('fetch', function(event) {
   event.respondWith(
@@ -498,20 +500,32 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-This gives you the "Cache only" behaviour for things in the cache and the "Network only" behaviour for anything not-cached (which includes all non-GET requests, as they cannot be cached).
+> This gives you the "Cache only" behaviour for things in the cache and the "Network only" behaviour for anything not-cached (which includes all non-GET requests, as they cannot be cached).
 
-###<a name="cache-network-race"></a>Cache & network race
+このパターンはまず「常にキャッシュから取得する」のパターンを適用し、キャッシュに見つからない場合のみ「常にネットワークから取得する」のパターンを適用します。GET以外のHTTPリクエストはキャッシュに保存されないため、後者のパターンが適用されます。
+
+> ###<a name="cache-network-race"></a>Cache & network race
+
+###<a name="cache-network-race"></a>キャッシュとネットワークのどちらか速い方から取得する
 
 ![Cache & network race](images/12-Cache-and-network-race.png)
 
-**Ideal for:** Small assets where you're chasing performance on devices with slow disk access.
+> **Ideal for:** Small assets where you're chasing performance on devices with slow disk access.
 
-With some combinations of older hard drives, virus scanners, and faster internet connections, getting resources from the network can be quicker than going to disk. However, going to the network when the user has the content on their device can be a waste of data, so bear that in mind.
+**このパターンが適するのは：**ディスクアクセスが低速なデバイスでサイズの小さいリソースをリクエストした場合。
+
+> With some combinations of older hard drives, virus scanners, and faster internet connections, getting resources from the network can be quicker than going to disk. However, going to the network when the user has the content on their device can be a waste of data, so bear that in mind.
+
+ある特定の環境では、ネットワークからリソースを取得する方がディスクから取得するよりも速い場合があります。これは、古いHDD、ウィルススキャン、速いインターネット接続等の、いずれかの条件もしくはそれらの組み合わせにより生じます。しかしながら、基本的にデバイス上に存在するデータをネットワークから取得するのであれば、データを無駄に持っていることになります。
 
 ```js
-// Promise.race is no good to us because it rejects if
-// a promise rejects before fulfilling. Let's make a proper
-// race function:
+// > Promise.race is no good to us because it rejects if
+// > a promise rejects before fulfilling. Let's make a proper
+// > race function:
+// Promise.race はいずれかのアイテムが成功するよりも先に
+// あるアイテムが失敗した時点でrejectされてしまうので、
+// ここでの要件（どのアイテムが最初に成功したか知りたい）を満たしません。
+// 以下に独自のrace関数を実装しました。
 function properRace(promises) {
   // we implement by inverting Promise.all
   Promise.all(
