@@ -866,7 +866,7 @@ self.addEventListener('fetch', function(event) {
 * [Layout](http://thenounproject.com/term/layout/36872/) by Mister Pixel
 * [Cloud](http://thenounproject.com/term/cloud/2788/) by P.J. Onori
 
-And thanks to [Jeff Posnick](https://twitter.com/jeffposnick) for catching many howling errors before I hit "publish".
+> And thanks to [Jeff Posnick](https://twitter.com/jeffposnick) for catching many howling errors before I hit "publish".
 
 そして最後に辛抱強く校正を手伝ってくれた[Jeff Posnick](https://twitter.com/jeffposnick)に感謝の意を述べたいと思います。
 
@@ -879,5 +879,5 @@ And thanks to [Jeff Posnick](https://twitter.com/jeffposnick) for catching many 
 > * [JavaScript promises, there and back again](http://www.html5rocks.com/ja/tutorials/es6/promises/) - guide to promises
 
 * [Service Worker の紹介](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)
-* [Is ServiceWorker ready?](https://jakearchibald.github.io/isserviceworkerready/) - track the implementation status across the main browsers
-* [JavaScript promises, there and back again](http://www.html5rocks.com/ja/tutorials/es6/promises/) - guide to promises
+* [Is ServiceWorker ready?](https://jakearchibald.github.io/isserviceworkerready/) - 主要なブラウザでの実装状況まとめ
+* [JavaScript promises, there and back again](http://www.html5rocks.com/ja/tutorials/es6/promises/) - Promiseの紹介記事
