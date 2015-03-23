@@ -840,13 +840,21 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-…you get the picture.
+> …you get the picture.
 
-If you come up with additional patterns, throw them at me in the comments!
+これで全体像はつかめたと思います。
 
-##<a name=""></a>著作権
+> If you come up with additional patterns, throw them at me in the comments!
 
-…for the lovely icons:
+もし他のパターンを思いついたらぜひコメントで私に知らせてください。
+
+>##Credits
+
+##<a name=""></a>クレジット
+
+> …for the lovely icons:
+
+以下は本記事で使用したすばらしいアイコンの作者です。
 
 * [Code](http://thenounproject.com/term/code/17547/) by buzzyrobot
 * [Calendar](http://thenounproject.com/term/calendar/4672/) by Scott Lewis
@@ -860,8 +868,16 @@ If you come up with additional patterns, throw them at me in the comments!
 
 And thanks to [Jeff Posnick](https://twitter.com/jeffposnick) for catching many howling errors before I hit "publish".
 
+そして最後に辛抱強く校正を手伝ってくれた[Jeff Posnick](https://twitter.com/jeffposnick)に感謝の意を述べたいと思います。
+
+> ##Further reading
+
 ##<a name=""></a>参考文献
 
-* [Intro to ServiceWorkers](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)
+> * [Intro to ServiceWorkers](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)
+> * [Is ServiceWorker ready?](https://jakearchibald.github.io/isserviceworkerready/) - track the implementation status across the main browsers
+> * [JavaScript promises, there and back again](http://www.html5rocks.com/ja/tutorials/es6/promises/) - guide to promises
+
+* [Service Worker の紹介](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)
 * [Is ServiceWorker ready?](https://jakearchibald.github.io/isserviceworkerready/) - track the implementation status across the main browsers
 * [JavaScript promises, there and back again](http://www.html5rocks.com/ja/tutorials/es6/promises/) - guide to promises
