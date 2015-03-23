@@ -391,7 +391,7 @@ self.addEventListener('notificationclick', function(event) {
 
 > **Ideal for:** Non-urgent updates, especially those that happen so regularly that a push message per update would be too frequent, such as social timelines or news articles.
 
-**このパターンが適するのは：**同期の緊急度が高くないコンテンツ。特に、ソーシャルメディアのタイムラインやニュースの記事等、更新されるたびにPush通知を送るまでもないコンテンツ。
+**このパターンが適するのは：**同期の緊急度が高くないコンテンツ。特に、ソーシャルメディアのタイムラインやニュースの記事等、更新のたびにPush通知を送るまでもないコンテンツ。
 
 ```js
 self.addEventListener('sync', function(event) {
