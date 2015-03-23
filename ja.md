@@ -687,7 +687,7 @@ self.addEventListener('fetch', function(event) {
 
 > ###Generic fallback
 
-###<a name="generic-fallback"></a>キャッシュからもネットワークからも取得できなかった場合にデフォルトコンテンツを表示する
+###<a name="generic-fallback"></a>パターン７：キャッシュからもネットワークからも取得できなかった場合にデフォルトコンテンツを表示する
 
 ![Generic fallback](images/15-Generic-fallback.png)
 
