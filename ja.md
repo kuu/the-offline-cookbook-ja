@@ -467,7 +467,7 @@ navigator.requestStorageDurability().then(function() {
 
 > **Ideal for:** Anything you'd consider static to that "version" of your site. You should have cached these in the install event, so you can depend on them being there.
 
-**このパターンが適するのは：**アプリケーションの特定のバージョンを構成するすべての静的なリソース。これらのリソースは`install`イベント時に依存リソースとしてキャッシュに保存することで、必ずキャッシュに存在することが保証されます。
+**このパターンが適するのは：**アプリケーションの特定のバージョンを構成するすべての静的なリソース。これらのリソースは`install`イベント時に依存リソースとしてキャッシュに保存することで、必ずキャッシュに存在することが保証されています。
 
 ```js
 self.addEventListener('fetch', function(event) {
