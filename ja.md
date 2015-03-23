@@ -71,6 +71,7 @@ _投稿日：2014年12月9日_
 4. [まとめ](#putting-it-together)
 
 > ##The cache machine - when to store resources
+
 ##<a name="the-cache-machine-when-to-store-resources"></a>キャッシュ更新の８つのパターン
 
 > ServiceWorker lets you handle requests independently from caching, so we'll look at them separately. First up, caching, when should it be done?
