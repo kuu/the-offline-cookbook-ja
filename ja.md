@@ -2,8 +2,8 @@ _Japanese translation from [the original post](http://jakearchibald.com/2014/off
 
 _原文: [The offline cookbook by Jake Archibald] (http://jakearchibald.com/2014/offline-cookbook/)_
 
-#The offline cookbook
-_Posted 09 December 2014_
+> #The offline cookbook
+> _Posted 09 December 2014_
 
 #オフラインクックブック
 _投稿日：2014年12月9日_
