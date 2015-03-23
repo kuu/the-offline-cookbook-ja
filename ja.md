@@ -64,8 +64,8 @@ _投稿日：2014年12月9日_
  2. [パターン２：常にネットワークから取得する](#network-only)
  3. [パターン３：キャッシュになければネットワークから取得する](#cache-falling-back-to-network)
  4. [パターン４：キャッシュとネットワークのどちらか速い方から取得する](#cache-network-race)
- 5. [パターン５：Network falling back to cache](#network-falling-back-to-cache)
- 6. [パターン６：Cache then network](#cache-then-network)
+ 5. [パターン５：ネットワークから取得できなければキャッシュから取得する](#network-falling-back-to-cache)
+ 6. [パターン６：キャッシュから取得してさらにネットワークからも取得する](#cache-then-network)
  7. [パターン７：Generic fallback](#generic-fallback)
  8. [パターン８：ServiceWorker-side templating](#serviceworker-side-templating)
 4. [まとめ](#putting-it-together)
@@ -436,7 +436,7 @@ navigator.requestStorageDurability().then(function() {
 
 > ###<a name="cache-only"></a>Cache only
 
-###<a name="cache-only"></a>常にキャッシュから取得する
+###<a name="cache-only"></a>パターン１：常にキャッシュから取得する
 
 ![Cache only](images/09-Cache-only.png)
 
@@ -460,7 +460,7 @@ self.addEventListener('fetch', function(event) {
 
 > ###<a name="network-only"></a>Network only
 
-###<a name="network-only"></a>常にネットワークから取得する
+###<a name="network-only"></a>パターン２：常にネットワークから取得する
 
 ![Network only](images/10-Network-only.png)
 
@@ -482,7 +482,7 @@ self.addEventListener('fetch', function(event) {
 
 > ###<a name="cache-falling-back-to-network"></a>Cache, falling back to network
 
-###<a name="cache-falling-back-to-network"></a>キャッシュになければネットワークから取得する
+###<a name="cache-falling-back-to-network"></a>パターン３：キャッシュになければネットワークから取得する
 
 ![Cache, falling back to network](images/11-Cache-falling-back-to-network.png)
 
@@ -506,7 +506,7 @@ self.addEventListener('fetch', function(event) {
 
 > ###<a name="cache-network-race"></a>Cache & network race
 
-###<a name="cache-network-race"></a>キャッシュとネットワークのどちらか速い方から取得する
+###<a name="cache-network-race"></a>パターン４：キャッシュとネットワークのどちらか速い方から取得する
 
 ![Cache & network race](images/12-Cache-and-network-race.png)
 
@@ -554,7 +554,9 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-###<a name="network-falling-back-to-cache"></a>Network falling back to cache
+> ###<a name="network-falling-back-to-cache"></a>Network falling back to cache
+
+###<a name="network-falling-back-to-cache"></a>パターン５：ネットワークから取得できなければキャッシュから取得する
 
 ![Network falling back to cache](images/13-Network-falling-back-to-cache.png)
 
@@ -574,7 +576,9 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-###<a name="cache-then-network"></a>Cache then network
+> ###<a name="cache-then-network"></a>Cache then network
+
+###<a name="cache-then-network"></a>パターン６：キャッシュから取得してさらにネットワークからも取得する
 
 ![Cache then network](images/14-Cache-then-network.png)
 
