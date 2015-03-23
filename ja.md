@@ -543,7 +543,7 @@ self.addEventListener('fetch', function(event) {
 
 > With some combinations of older hard drives, virus scanners, and faster internet connections, getting resources from the network can be quicker than going to disk. However, going to the network when the user has the content on their device can be a waste of data, so bear that in mind.
 
-ある特定の環境では、ネットワークからリソースを取得する方がディスクから取得するよりも速い場合があります。これは、古いHDD、ウィルススキャン、速いインターネット接続等の、いずれかの条件もしくはそれらの組み合わせにより生じます。しかしながら、基本的にデバイス上に存在するデータをネットワークから取得するのであれば、データを無駄に持っていることになります。
+ある特定の環境では、ネットワークからリソースを取得する方がディスクから取得するよりも速い場合があります。これは、古いHDD、ウィルススキャン、速いインターネット接続のいずれかもしくはそれらの組み合わせにより生じます。しかしながら、基本的にデバイス上に存在するデータをネットワークから取得するのであれば、データを無駄に持っていることになります。
 
 ```js
 // > Promise.race is no good to us because it rejects if
