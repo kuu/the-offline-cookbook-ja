@@ -367,7 +367,7 @@ self.addEventListener('notificationclick', function(event) {
 
 > **Ideal for:** Non-urgent updates, especially those that happen so regularly that a push message per update would be too frequent, such as social timelines or news articles.
 
-**このパターンが適するのは：**同期の緊急度が高くないコンテンツ。特に、SNSのタイムラインやニュースの記事等、更新されるたびにPush通知を送るまでもないコンテンツ。
+**このパターンが適するのは：**同期の緊急度が高くないコンテンツ。特に、ソーシャルメディアのタイムラインやニュースの記事等、更新されるたびにPush通知を送るまでもないコンテンツ。
 
 ```js
 self.addEventListener('sync', function(event) {
@@ -560,11 +560,17 @@ self.addEventListener('fetch', function(event) {
 
 ![Network falling back to cache](images/13-Network-falling-back-to-cache.png)
 
-**Ideal for:** A quick-fix for resources that update frequently, outside of the "version" of the site. E.g. articles, avatars, social media timelines, game leader boards.
+> **Ideal for:** A quick-fix for resources that update frequently, outside of the "version" of the site. E.g. articles, avatars, social media timelines, game leader boards.
 
-This means you give online users the most up-to-date content, but offline users get an older cached version. If the network request succeeds you'll most-likely want to [update the cache entry](#on-network-response).
+**このパターンが適するのは：**頻繁に更新されるリソースが取得できなかった場合の応急処置としてキャッシュから取得する。これらはアプリケーションの特定のバージョンに必須のリソースではない。（例：ブログ記事、アバター、ソーシャルメディアのタイムライン、ゲームのリーダーボード等）
 
-However, this method has flaws. If the user has an intermittent or slow connection they'll have to wait for the network to fail before they get the perfectly acceptable content already on their device. This can take an extremely long time and is a frustrating user experience. See the next pattern, ["Cache then network"](#cache-then-network), for a better solution.
+> This means you give online users the most up-to-date content, but offline users get an older cached version. If the network request succeeds you'll most-likely want to [update the cache entry](#on-network-response).
+
+このパターンは結局のところ、オンラインのユーザーには最新のコンテンツを提供し、オフラインのユーザーにはキャッシュから取得した古いコンテンツを提供することになります。また通常、ネットワークからの取得が成功した場合は、その後に先述の[「`fetch`イベント時にレスポンスをキャッシュに保存する」](#on-network-response)のパターンが適用されます。
+
+> However, this method has flaws. If the user has an intermittent or slow connection they'll have to wait for the network to fail before they get the perfectly acceptable content already on their device. This can take an extremely long time and is a frustrating user experience. See the next pattern, ["Cache then network"](#cache-then-network), for a better solution.
+
+しかしながら、このパターンには欠陥があります。もしユーザーのネットワーク接続が低速もしくは途切れがちである場合、提示可能なコンテンツがデバイス上に存在するのにもかかわらず、ネットワークからの取得が失敗するまで待たないといけません。場合によってはユーザーは非常に長い間待たされるかもしれません。これに対する解決策としては次の[「キャッシュから取得してさらにネットワークからも取得する」](#cache-then-network)を参照ください。
 
 ```js
 self.addEventListener('fetch', function(event) {
