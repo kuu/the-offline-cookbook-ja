@@ -513,7 +513,7 @@ self.addEventListener('fetch', function(event) {
 
 ![Cache, falling back to network](images/11-Cache-falling-back-to-network.png)
 
-**Ideal for:** If you're building offline-first, this is how you'll handle the majority of requests. Other patterns will be exceptions based on the incoming request.
+> **Ideal for:** If you're building offline-first, this is how you'll handle the majority of requests. Other patterns will be exceptions based on the incoming request.
 
 **このパターンが適するのは：**通常のオフラインファーストなアプリケーションでは、ほとんどのリクエスト処理にこのパターンが適用されます。そして、リクエストによっては例外的に他のパターンを適用します。
 
