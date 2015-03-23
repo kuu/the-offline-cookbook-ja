@@ -63,7 +63,7 @@ _投稿日：2014年12月9日_
  1. [パターン１：常にキャッシュから取得する](#cache-only)
  2. [パターン２：常にネットワークから取得する](#network-only)
  3. [パターン３：キャッシュになければネットワークから取得する](#cache-falling-back-to-network)
- 4. [パターン４：Cache & network race](#cache-network-race)
+ 4. [パターン４：キャッシュとネットワークのどちらか速い方から取得する](#cache-network-race)
  5. [パターン５：Network falling back to cache](#network-falling-back-to-cache)
  6. [パターン６：Cache then network](#cache-then-network)
  7. [パターン７：Generic fallback](#generic-fallback)
