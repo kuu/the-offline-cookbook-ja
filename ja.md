@@ -294,7 +294,9 @@ self.addEventListener('fetch', function(event) {
 
 このパターンはHTTPの[stale-while-revalidate](https://www.mnot.net/blog/2007/12/12/stale)とよく似ています。
 
-###<a name="on-push-message"></a>Push通知
+> ###On push message
+
+###<a name="on-push-message"></a>パターン７：Push通知
 
 ![On push message](images/07-On-push-message.png)
 
@@ -353,7 +355,9 @@ self.addEventListener('notificationclick', function(event) {
 });
 ```
 
-###<a name="on-background-sync"></a>バックグラウンド同期
+> ###On background-sync
+
+###<a name="on-background-sync"></a>パターン８：バックグラウンド同期
 
 ![On background-sync](images/08-On-background-sync.png)
 
