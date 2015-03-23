@@ -365,9 +365,11 @@ self.addEventListener('push', function(event) {
 
 self.addEventListener('notificationclick', function(event) {
   if (event.notification.tag == 'new-email') {
-    // Assume that all of the resources needed to render
-    // /inbox/ have previously been cached, e.g. as part
-    // of the install handler.
+    // > Assume that all of the resources needed to render
+    // > /inbox/ have previously been cached, e.g. as part
+    // > of the install handler.
+    // この時点で/inbox/のコンテンツを表示するために必要なリソース
+    // はすべてキャッシュされていなければいけない。
     new WindowClient('/inbox/');
   }
 });
