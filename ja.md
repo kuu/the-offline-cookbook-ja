@@ -595,7 +595,7 @@ self.addEventListener('fetch', function(event) {
 
 > This means you give online users the most up-to-date content, but offline users get an older cached version. If the network request succeeds you'll most-likely want to [update the cache entry](#on-network-response).
 
-このパターンは結局のところ、オンラインのユーザーには最新のコンテンツを提供し、オフラインのユーザーにはキャッシュから取得した古いコンテンツを提供することになります。また通常、ネットワークからの取得が成功した場合は、その後に先述の[「`fetch`イベント時にレスポンスをキャッシュに保存する」](#on-network-response)のパターンが適用されます。
+このパターンは結局のところ、オンラインのユーザーには最新のコンテンツを提供し、オフラインのユーザーにはキャッシュから取得した古いコンテンツを提供することになります。また、通常はネットワークからの取得が成功した場合は、その後に先述の[「`fetch`イベント時にレスポンスをキャッシュに保存する」](#on-network-response)のパターンが適用されます。
 
 > However, this method has flaws. If the user has an intermittent or slow connection they'll have to wait for the network to fail before they get the perfectly acceptable content already on their device. This can take an extremely long time and is a frustrating user experience. See the next pattern, ["Cache then network"](#cache-then-network), for a better solution.
 
