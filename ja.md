@@ -212,7 +212,7 @@ self.addEventListener('activate', function(event) {
 
 > Give the user a "Read later" or "Save for offline" button. When it's clicked, fetch what you need from the network & pop it in the cache.
 
-このパターンでは、ユーザーに「後で読む」ボタンや「オフライン視聴向けに保存」ボタン等のUIを提供して、ネットワークからリソースを読み込み、キャッシュに保存します。
+このパターンでは、ユーザーに「後で読む」ボタンや「オフライン視聴向けに保存」ボタン等のUIを提供して、それらが押されたタイミングで、ネットワークからリソースを読み込み、キャッシュに保存します。
 
 ```js
 document.querySelector('.cache-article').addEventListener('click', function(event) {
