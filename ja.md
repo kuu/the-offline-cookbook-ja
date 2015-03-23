@@ -740,7 +740,7 @@ self.addEventListener('fetch', function(event) {
 
 > **Ideal for:** Pages that cannot have their server response cached.
 
-**このパターンが適するのは：**サーバーで動的に生成されたページ等、キャッシュしても意味がないコンテンツ。
+**このパターンが適するのは：**サーバーで動的に生成されたページ等、レスポンスをそのままキャッシュしてもあまり意味がないコンテンツ。
 
 > [Rendering pages on the server makes things fast](http://jakearchibald.com/2013/progressive-enhancement-is-faster/), but that can mean including state data that may not make sense in a cache, e.g. "Logged in as…". If your page is controlled by a ServiceWorker, you may instead choose to request JSON data along with a template, and render that instead.
 
