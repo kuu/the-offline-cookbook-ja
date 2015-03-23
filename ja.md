@@ -515,7 +515,7 @@ self.addEventListener('fetch', function(event) {
 
 > **Ideal for:** If you're building offline-first, this is how you'll handle the majority of requests. Other patterns will be exceptions based on the incoming request.
 
-**このパターンが適するのは：**通常のオフラインファーストなアプリケーションでは、ほとんどのリクエスト処理にこのパターンが適用され、例外的なリクエストにのみ他のパターンを適用します。
+**このパターンが適するのは：**通常のオフラインファーストなアプリケーションでは、ほとんどのリクエスト処理にこのパターンが適用され、例外的なリクエストにのみ他のパターンが適用されます。
 
 ```js
 self.addEventListener('fetch', function(event) {
