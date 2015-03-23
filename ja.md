@@ -66,7 +66,7 @@ _投稿日：2014年12月9日_
  4. [パターン４：キャッシュとネットワークのどちらか速い方から取得する](#cache-network-race)
  5. [パターン５：ネットワークから取得できなければキャッシュから取得する](#network-falling-back-to-cache)
  6. [パターン６：キャッシュから取得してさらにネットワークからも取得する](#cache-then-network)
- 7. [パターン７：Generic fallback](#generic-fallback)
+ 7. [パターン７：キャッシュからもネットワークからも取得できなかった場合にデフォルトコンテンツを表示する](#generic-fallback)
  8. [パターン８：ServiceWorker-side templating](#serviceworker-side-templating)
 4. [まとめ](#putting-it-together)
 
@@ -687,35 +687,49 @@ self.addEventListener('fetch', function(event) {
 
 > ###Generic fallback
 
-###<a name="generic-fallback"></a>Generic fallback
+###<a name="generic-fallback"></a>キャッシュからもネットワークからも取得できなかった場合にデフォルトコンテンツを表示する
 
 ![Generic fallback](images/15-Generic-fallback.png)
 
-If you fail to serve something from the cache and/or network you may want to provide a generic fallback.
+> If you fail to serve something from the cache and/or network you may want to provide a generic fallback.
 
-**Ideal for:** Secondary imagery such as avatars, failed POST requests, "Unavailable while offline" page.
+キャッシュとネットワークの両方でリソースの取得に失敗した場合、あらかじめ用意したコンテンツを表示できるようにします。
+
+> **Ideal for:** Secondary imagery such as avatars, failed POST requests, "Unavailable while offline" page.
+
+**このパターンが適するのは：**アバターが取得できなかった場合のデフォルト画像、POSTリクエストが失敗したときに表示するコンテンツ、「このページはオフラインでは利用できません」といった内容を伝えるためのデフォルトページ等。
 
 ```js
 self.addEventListener('fetch', function(event) {
   event.respondWith(
-    // Try the cache
+    // > Try the cache
+    // まずはキャッシュから取得
     caches.match(event.request).then(function(response) {
-      // Fall back to network
+      // > Fall back to network
+      // なければネットワークから取得
       return response || fetch(event.request);
     }).catch(function() {
-      // If both fail, show a generic fallback:
+      // > If both fail, show a generic fallback:
+      // 両方ダメな場合、デフォルトコンテンツを表示する
       return caches.match('/offline.html');
-      // However, in reality you'd have many different
-      // fallbacks, depending on URL & headers.
-      // Eg, a fallback silhouette image for avatars.
+      // > However, in reality you'd have many different
+      // > fallbacks, depending on URL & headers.
+      // > Eg, a fallback silhouette image for avatars.
+      // 実際にはURLやヘッダーの内容によって、
+      // 多数の異なるコンテンツを提供する必要がある。
+      // （例：シルエットのみのアバター等）
     })
   );
 });
 ```
 
-The item you fallback to is likely to be an [install dependency](#on-install-as-a-dependency).
+> The item you fallback to is likely to be an [install dependency](#on-install-as-a-dependency).
 
-If your page is posting an email, your ServiceWorker may fall back to storing the email in an IDB 'outbox' & respond letting the page know that the send failed but the data was successfully retained.
+ちなみに、このパターンで使用するデフォルトコンテンツは[依存リソースとしてインストール](#on-install-as-a-dependency)されている必要があります。
+
+> If your page is posting an email, your ServiceWorker may fall back to storing the email in an IDB 'outbox' & respond letting the page know that the send failed but the data was successfully retained.
+
+もしメールのアプリケーションであれば、このような場合、Service WorkerはIndexedDBの送信ボックスにメールを保存します。そして、送信失敗したけれどメールのデータは送信ボックスに保存されている旨、ユーザーに知らせます。
 
 > ###ServiceWorker-side templating
 
