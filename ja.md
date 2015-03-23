@@ -742,7 +742,7 @@ self.addEventListener('fetch', function(event) {
 
 > If your page is posting an email, your ServiceWorker may fall back to storing the email in an IDB 'outbox' & respond letting the page know that the send failed but the data was successfully retained.
 
-もしメールのアプリケーションであれば、オフライン時に送信操作を行った場合、Service WorkerはIndexedDBの送信ボックスにメールを保存します。そして、送信は失敗したもののメールのデータは送信ボックスに保存されている旨、ユーザーに知らせます。
+もしメールのアプリケーションであれば、オフライン時に送信操作を行った場合、Service WorkerはIndexedDBの送信ボックスにメールを保存します。そして、送信は失敗したものの、未送信メールのデータは送信ボックスに保存されている旨、ユーザーに知らせます。
 
 > ###ServiceWorker-side templating
 
