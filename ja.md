@@ -50,19 +50,19 @@ _投稿日：2014年12月9日_
 **目次**
 
 1. [キャッシュ更新の８つのパターン](#the-cache-machine-when-to-store-resources)
- 1. [パターン１：`install`イベント時に依存ファイルをキャッシュに保存する](#on-install-as-a-dependency)
- 2. [パターン２：`install`イベント時に非依存ファイルをキャッシュに保存する](#on-install-not-as-a-dependency)
- 3. [パターン３：`activate`イベント時に不要なファイルをキャッシュから削除する](#on-activate)
- 4. [パターン４：ユーザーの操作によりファイルをキャッシュに保存する](#on-user-interaction)
+ 1. [パターン１：`install`イベント時に依存リソースをキャッシュに保存する](#on-install-as-a-dependency)
+ 2. [パターン２：`install`イベント時に非依存リソースをキャッシュに保存する](#on-install-not-as-a-dependency)
+ 3. [パターン３：`activate`イベント時に不要なリソースをキャッシュから削除する](#on-activate)
+ 4. [パターン４：ユーザーの操作によりリソースをキャッシュに保存する](#on-user-interaction)
  5. [パターン５：`fetch`イベント時にレスポンスをキャッシュに保存する](#on-network-response)
  6. [パターン６：`stale-while-revalidate`パターン](#stale-while-revalidate)
  7. [パターン７：Push通知](#on-push-message)
  8. [パターン８：バックグラウンド同期](#on-background-sync)
 2. [キャッシュの持続性](#cache-persistence)
 3. [リクエスト処理の８つのパターン](#serving-suggestions-responding-to-requests)
- 1. [パターン１：Cache only](#cache-only)
- 2. [パターン２：Network only](#network-only)
- 3. [パターン３：Cache, falling back to network](#cache-falling-back-to-network)
+ 1. [パターン１：常にキャッシュから取得する](#cache-only)
+ 2. [パターン２：常にネットワークから取得する](#network-only)
+ 3. [パターン３：キャッシュになければネットワークから取得する](#cache-falling-back-to-network)
  4. [パターン４：Cache & network race](#cache-network-race)
  5. [パターン５：Network falling back to cache](#network-falling-back-to-cache)
  6. [パターン６：Cache then network](#cache-then-network)
@@ -77,7 +77,7 @@ _投稿日：2014年12月9日_
 
 Service Workerでは、リクエストとキャッシュは独立したものとして扱われます。本記事でもそれらを分けて説明します。まずはキャッシュに関して、どのタイミングでキャッシュを更新するかという点に着目し、いくつかの考えられるパターンを挙げます。
 
-###<a name="on-install-as-a-dependency"></a>パターン１：`install`イベント時に依存ファイルをキャッシュに保存する
+###<a name="on-install-as-a-dependency"></a>パターン１：`install`イベント時に依存リソースをキャッシュに保存する
 
 ![On install - as a dependency](images/01-On-install-as-a-dependency.png)
 
@@ -87,11 +87,11 @@ Service Worker は`install`イベントを受け取ります。`install`イベ�
 
 > **Ideal for:** CSS, images, fonts, JS, templates… basically anything you'd consider static to that "version" of your site.
 
-**このパターンが適するのは：**アプリケーションの特定のバージョンを構成するCSS、画像、フォント、JavaScript、テンプレート等、基本的にすべての静的なファイル。
+**このパターンが適するのは：**アプリケーションの特定のバージョンを構成するCSS、画像、フォント、JavaScript、テンプレート等、基本的にすべての静的なリソース。
 
 > These are things that would make your site entirely non-functional if they failed to fetch, things an equivalent native-app would make part of the initial download.
 
-これらのファイルはアプリケーションにとって必要不可欠なものであり、ネイティブアプリのインストーラに含まれるファイルと同等です。
+これらのリソースはアプリケーションにとって必要不可欠なものであり、ネイティブアプリのインストーラに含まれるファイルと同等です。
 
 ```js
 self.addEventListener('install', function(event) {
@@ -117,7 +117,7 @@ self.addEventListener('install', function(event) {
 
 サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、すべての静的なアセットを`install`イベントで[キャッシュに保存しています](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L3)。
 
-###<a name="on-install-not-as-a-dependency"></a>パターン２：`install`イベント時に非依存ファイルをキャッシュに保存する
+###<a name="on-install-not-as-a-dependency"></a>パターン２：`install`イベント時に非依存リソースをキャッシュに保存する
 
 ![On install - not as a dependency](images/02-On-install-not-as-a-dependency.png)
 
@@ -152,7 +152,7 @@ self.addEventListener('install', function(event) {
 
 また、"levels 11-100"のデータ取得中にService Workerが強制終了する場合もあります。これは"levels 11-100"以外のデータをキャッシュに保存した時点でイベント処理は完了したとみなされるからです。この場合、Service Workerが終了しても"levels 11-100"のダウンロードはバックグラウンドで継続します。
 
-###<a name="on-activate"></a>パターン３：`activate`イベント時に不要なファイルをキャッシュから削除する
+###<a name="on-activate"></a>パターン３：`activate`イベント時に不要なリソースをキャッシュから削除する
 
 ![On activate](images/03-On-activate.png)
 
@@ -188,9 +188,9 @@ self.addEventListener('activate', function(event) {
 
 > On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [remove old caches](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L17).
 
-サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、不要となったファイルを`activate`イベントで[キャッシュから削除しています](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L17)。
+サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、不要となったリソースを`activate`イベントで[キャッシュから削除しています](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L17)。
 
-###<a name="on-user-interaction"></a>ユーザーの操作によりファイルをキャッシュに保存する
+###<a name="on-user-interaction"></a>ユーザーの操作によりリソースをキャッシュに保存する
 
 ![On user interaction](images/04-On-user-interaction.png)
 
@@ -200,7 +200,7 @@ self.addEventListener('activate', function(event) {
 
 > Give the user a "Read later" or "Save for offline" button. When it's clicked, fetch what you need from the network & pop it in the cache.
 
-このパターンでは、ユーザーに「後で読む」ボタンや「オフライン視聴向けに保存」ボタン等のUIを提供して、ネットワークからファイルを読み込み、キャッシュに保存します。
+このパターンでは、ユーザーに「後で読む」ボタンや「オフライン視聴向けに保存」ボタン等のUIを提供して、ネットワークからリソースを読み込み、キャッシュに保存します。
 
 ```js
 document.querySelector('.cache-article').addEventListener('click', function(event) {
@@ -434,27 +434,39 @@ navigator.requestStorageDurability().then(function() {
 
 どれだけキャッシュに保存しても、それらのキャッシュをいつ／どのように読み出すか、Service Workerに伝えてやらなければ使われないままです。ここではリクエスト処理に関して、いくつかの考えられるパターンを挙げます。
 
-###<a name="cache-only"></a>Cache only
+> ###<a name="cache-only"></a>Cache only
+
+###<a name="cache-only"></a>常にキャッシュから取得する
 
 ![Cache only](images/09-Cache-only.png)
 
-**Ideal for:** Anything you'd consider static to that "version" of your site. You should have cached these in the install event, so you can depend on them being there.
+> **Ideal for:** Anything you'd consider static to that "version" of your site. You should have cached these in the install event, so you can depend on them being there.
+
+**このパターンが適するのは：**アプリケーションの特定のバージョンを構成するすべての静的なリソース。これらのリソースは`install`イベント時に依存リソースとしてキャッシュに保存することで、必ずキャッシュに存在することが保証されます。
 
 ```js
 self.addEventListener('fetch', function(event) {
-  // If a match isn't found in the cache, the response
-  // will look like a connection error
+  // > If a match isn't found in the cache, the response
+  // > will look like a connection error
+  // キャッシュに見つからなかった場合は、
+  // コネクションエラーと同様のレスポンスになります
   event.respondWith(caches.match(event.request));
 });
 ```
 
-…although you don't often need to handle this case specifically, ["Cache, falling back to network"](#cache-falling-back-to-network) covers it.
+> …although you don't often need to handle this case specifically, ["Cache, falling back to network"](#cache-falling-back-to-network) covers it.
 
-###<a name="network-only"></a>Network only
+通常はこのパターンではなく、後述の[「キャッシュになければネットワークから取得する」](#cache-falling-back-to-network)が適用されます。
+
+> ###<a name="network-only"></a>Network only
+
+###<a name="network-only"></a>常にネットワークから取得する
 
 ![Network only](images/10-Network-only.png)
 
-**Ideal for:** Things that have no offline equivalent, such as analytics pings, non-GET requests.
+> **Ideal for:** Things that have no offline equivalent, such as analytics pings, non-GET requests.
+
+**このパターンが適するのは：**オフラインでは成立しないリクエスト（例：アナリティクス APIの呼び出し、GET以外のHTTPリクエスト等）
 
 ```js
 self.addEventListener('fetch', function(event) {
@@ -464,9 +476,13 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-…although you don't often need to handle this case specifically, ["Cache, falling back to network"](#cache-falling-back-to-network) covers it.
+> …although you don't often need to handle this case specifically, ["Cache, falling back to network"](#cache-falling-back-to-network) covers it.
 
-###<a name="cache-falling-back-to-network"></a>Cache, falling back to network
+通常はこのパターンではなく、後述の[「キャッシュになければネットワークから取得する」](#cache-falling-back-to-network)が適用されます。
+
+> ###<a name="cache-falling-back-to-network"></a>Cache, falling back to network
+
+###<a name="cache-falling-back-to-network"></a>キャッシュになければネットワークから取得する
 
 ![Cache, falling back to network](images/11-Cache-falling-back-to-network.png)
 
