@@ -610,7 +610,7 @@ self.addEventListener('fetch', function(event) {
 
 > This requires the page to make two requests, one to the cache, one to the network. The idea is to show the cached data first, then update the page when/if the network data arrives.
 
-このパターンではキャッシュとネットワークの両方のリクエストを同時に発行します。基本的なアイデアとしては、キャッシュから取得したリソースをまず提示して、もしネットワークからも取得できた場合は後からそのリソースでページを更新します。
+このパターンではキャッシュとネットワークの両方のリクエストを同時に発行します。基本的なアイデアとしては、キャッシュから取得したリソースをまず提示して、もしネットワークからも取得できた場合は、後からそのリソースでページの内容を差し替えます。
 
 > Sometimes you can just replace the current data when new data arrives (e.g. game leaderboard), but that can be disruptive with larger pieces of content. Basically, don't "disappear" something the user may be reading or interacting with.
 
