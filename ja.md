@@ -798,27 +798,31 @@ self.addEventListener('fetch', function(event) {
 
 ```js
 self.addEventListener('fetch', function(event) {
-  // Parse the URL:
+  // > Parse the URL:
+  // URLをパースする
   var requestURL = new URL(event.request.url);
 
-  // Handle requests to a particular host specifically
+  // > Handle requests to a particular host specifically
+  // 特定のホストに対するリクエストを処理する
   if (requestURL.hostname == 'api.example.com') {
-    event.respondWith(/* some combination of patterns */);
+    event.respondWith(/* > some combination of patterns *//* パターンA */);
     return;
   }
-  // Routing for local URLs
+  // > Routing for local URLs
+  // 自ドメインURLのルーティング
   if (requestURL.origin == location.origin) {
-    // Handle article URLs
+    // > Handle article URLs
+    // 記事のURLに対する処理
     if (/^\/article\//.test(requestURL.pathname)) {
-      event.respondWith(/* some other combination of patterns */);
+      event.respondWith(/* > some other combination of patterns *//* パターンB */);
       return;
     }
     if (/\.webp$/.test(requestURL.pathname)) {
-      event.respondWith(/* some other combination of patterns */);
+      event.respondWith(/* > some other combination of patterns *//* パターンC */);
       return;
     }
     if (request.method == 'POST') {
-      event.respondWith(/* some other combination of patterns */);
+      event.respondWith(/* > some other combination of patterns *//* パターンD */);
       return;
     }
     if (/cheese/.test(requestURL.pathname)) {
@@ -831,7 +835,8 @@ self.addEventListener('fetch', function(event) {
     }
   }
 
-  // A sensible default pattern
+  // > A sensible default pattern
+  // デフォルトのパターン
   event.respondWith(
     caches.match(event.request).then(function(response) {
       return response || fetch(event.request);
