@@ -539,7 +539,7 @@ self.addEventListener('fetch', function(event) {
 
 > **Ideal for:** Small assets where you're chasing performance on devices with slow disk access.
 
-**このパターンが適するのは：**ディスクアクセスが低速なデバイスでサイズの小さいリソースをリクエストする場合。
+**このパターンが適するのは：**ディスクアクセスが低速なデバイスにおいて、サイズの小さいリソースをリクエストする場合。
 
 > With some combinations of older hard drives, virus scanners, and faster internet connections, getting resources from the network can be quicker than going to disk. However, going to the network when the user has the content on their device can be a waste of data, so bear that in mind.
 
