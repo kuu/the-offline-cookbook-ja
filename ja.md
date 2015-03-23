@@ -77,6 +77,8 @@ _投稿日：2014年12月9日_
 
 Service Workerでは、リクエストとキャッシュは独立したものとして扱われます。本記事でもそれらを分けて説明します。まずはキャッシュに関して、どのタイミングでキャッシュを更新するかという点に着目し、いくつかの考えられるパターンを挙げます。
 
+> ###On install - as a dependency
+
 ###<a name="on-install-as-a-dependency"></a>パターン１：`install`イベント時に依存リソースをキャッシュに保存する
 
 ![On install - as a dependency](images/01-On-install-as-a-dependency.png)
@@ -117,6 +119,8 @@ self.addEventListener('install', function(event) {
 
 サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、すべての静的なアセットを`install`イベントで[キャッシュに保存しています](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L3)。
 
+> ###On install - not as a dependency
+
 ###<a name="on-install-not-as-a-dependency"></a>パターン２：`install`イベント時に非依存リソースをキャッシュに保存する
 
 ![On install - not as a dependency](images/02-On-install-not-as-a-dependency.png)
@@ -151,6 +155,8 @@ self.addEventListener('install', function(event) {
 > Also, the ServiceWorker may be killed while levels 11-100 download since it's finished handling events, but the download will continue in the background.
 
 また、"levels 11-100"のデータ取得中にService Workerが強制終了する場合もあります。これは"levels 11-100"以外のデータをキャッシュに保存した時点でイベント処理は完了したとみなされるからです。この場合、Service Workerが終了しても"levels 11-100"のダウンロードはバックグラウンドで継続します。
+
+> ###On activate
 
 ###<a name="on-activate"></a>パターン３：`activate`イベント時に不要なリソースをキャッシュから削除する
 
@@ -190,6 +196,8 @@ self.addEventListener('activate', function(event) {
 
 サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、不要となったリソースを`activate`イベントで[キャッシュから削除しています](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L17)。
 
+> ###On user interaction
+
 ###<a name="on-user-interaction"></a>ユーザーの操作によりリソースをキャッシュに保存する
 
 ![On user interaction](images/04-On-user-interaction.png)
@@ -222,6 +230,8 @@ document.querySelector('.cache-article').addEventListener('click', function(even
 > The above doesn't work in Chrome yet, as we've yet to expose fetch and caches to pages ([ticket #1](https://code.google.com/p/chromium/issues/detail?id=436770), [ticket #2](https://code.google.com/p/chromium/issues/detail?id=439389)). You could use navigator.serviceWorker.controller.postMessage to [send a signal to the ServiceWorker](https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/post-message) telling it which article to cache, and handle the rest there.
 
 `fetch`と`cache`はChromeでまだ実装されていないため、上記のコードは動きません。関連するチケットは、[ticket #1](https://code.google.com/p/chromium/issues/detail?id=436770)および[ticket #2](https://code.google.com/p/chromium/issues/detail?id=439389)です。その代わり、`navigator.serviceWorker.controller.postMessage`を使って[Service Workerにメッセージを送ることが可能です](https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/post-message)。（※訳注：[`fetch` API](http://updates.html5rocks.com/2015/03/introduction-to-fetch)は Chrome 42で実装されました。）
+
+> ###On network response
 
 ###<a name="on-network-response"></a>パターン５：`fetch`イベント時にレスポンスをキャッシュに保存する
 
@@ -261,6 +271,8 @@ self.addEventListener('fetch', function(event) {
 > On [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I use this to [cache Flickr images](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L109).
 
 サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、[Flickrの画像をキャッシュに保存](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L109)しています。
+
+> ###Stale-while-revalidate
 
 ###<a name="stale-while-revalidate"></a>パターン６：`stale-while-revalidate`パターン
 
@@ -438,7 +450,7 @@ navigator.requestStorageDurability().then(function() {
 
 どれだけキャッシュに保存しても、それらのキャッシュをいつ／どのように読み出すか、Service Workerに伝えてやらなければ使われないままです。ここではリクエスト処理に関して、いくつかの考えられるパターンを挙げます。
 
-> ###<a name="cache-only"></a>Cache only
+> ###Cache only
 
 ###<a name="cache-only"></a>パターン１：常にキャッシュから取得する
 
@@ -462,7 +474,7 @@ self.addEventListener('fetch', function(event) {
 
 通常はこのパターンではなく、後述の[「キャッシュになければネットワークから取得する」](#cache-falling-back-to-network)が適用されます。
 
-> ###<a name="network-only"></a>Network only
+> ###Network only
 
 ###<a name="network-only"></a>パターン２：常にネットワークから取得する
 
@@ -484,7 +496,7 @@ self.addEventListener('fetch', function(event) {
 
 通常はこのパターンではなく、後述の[「キャッシュになければネットワークから取得する」](#cache-falling-back-to-network)が適用されます。
 
-> ###<a name="cache-falling-back-to-network"></a>Cache, falling back to network
+> ###Cache, falling back to network
 
 ###<a name="cache-falling-back-to-network"></a>パターン３：キャッシュになければネットワークから取得する
 
@@ -508,7 +520,7 @@ self.addEventListener('fetch', function(event) {
 
 このパターンはまず「常にキャッシュから取得する」のパターンを適用し、キャッシュに見つからない場合のみ「常にネットワークから取得する」のパターンを適用します。GET以外のHTTPリクエストはキャッシュに保存されないため、後者のパターンが適用されます。
 
-> ###<a name="cache-network-race"></a>Cache & network race
+> ###Cache & network race
 
 ###<a name="cache-network-race"></a>パターン４：キャッシュとネットワークのどちらか速い方から取得する
 
@@ -558,7 +570,7 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-> ###<a name="network-falling-back-to-cache"></a>Network falling back to cache
+> ###Network falling back to cache
 
 ###<a name="network-falling-back-to-cache"></a>パターン５：ネットワークから取得できなければキャッシュから取得する
 
@@ -586,7 +598,7 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-> ###<a name="cache-then-network"></a>Cache then network
+> ###Cache then network
 
 ###<a name="cache-then-network"></a>パターン６：キャッシュから取得してさらにネットワークからも取得する
 
@@ -651,6 +663,8 @@ The above doesn't work in Chrome yet, as we've yet to expose fetch and caches to
 
 In [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I worked around this by using [XHR instead of fetch](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/utils.js#L3), and abusing the Accept header to tell the ServiceWorker where to get the result from ([page code](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/index.js#L70), [ServiceWorker code](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L61)).
 
+> ###Generic fallback
+
 ###<a name="generic-fallback"></a>Generic fallback
 
 ![Generic fallback](images/15-Generic-fallback.png)
@@ -680,6 +694,8 @@ self.addEventListener('fetch', function(event) {
 The item you fallback to is likely to be an [install dependency](#on-install-as-a-dependency).
 
 If your page is posting an email, your ServiceWorker may fall back to storing the email in an IDB 'outbox' & respond letting the page know that the send failed but the data was successfully retained.
+
+> ###ServiceWorker-side templating
 
 ###<a name="serviceworker-side-templating"></a>ServiceWorker-side templating
 
