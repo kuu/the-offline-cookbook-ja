@@ -385,13 +385,13 @@ self.addEventListener('sync', function(event) {
 
 ##<a name="cache-persistence"></a>キャッシュの持続性
 
-Your origin is given a certain amount of free space to do what it wants with. That free space is shared between all origin storage: LocalStorage, IndexedDB, Filesystem, and of course Caches.
+> Your origin is given a certain amount of free space to do what it wants with. That free space is shared between all origin storage: LocalStorage, IndexedDB, Filesystem, and of course Caches.
 
 あるサイズの不揮発領域がアプリケーションのオリジンごとに割り当てられています。ここで不揮発領域と言っているのは、LocalStorage、IndexedDB、Filesystem、そしてキャッシュ等を指しますが、これらは他のオリジンと共用されます。
 
 > The amount you get isn't spec'd, it will differ depending on device and storage conditions. You can find out how much you've got via:
 
-利用可能な不揮発領域の具体的なサイズは仕様で定義されておらず、機器や状況によって変わりますが、アプリケーションは以下のようにして利用可能なサイズを確認できます。
+利用可能な不揮発領域の具体的なサイズは仕様で定義されておらず、デバイスや状況によって変わりますが、アプリケーションは以下のようにして利用可能なサイズを確認できます。
 
 ```js
 navigator.storageQuota.queryInfo("temporary").then(function(info) {
@@ -404,7 +404,7 @@ navigator.storageQuota.queryInfo("temporary").then(function(info) {
 
 > However, like all browser storage, the browser is free to throw it away if the device becomes under storage pressure. Unfortunately the browser can't tell the different between those movies you want to keep at all costs, and the game you don't really care about.
 
-しかし、機器のリソースが不足した場合、それらの不揮発領域はブラウザにより強制的に解放されます。「この動画はどうしても残したいけれど、このゲームは削除されてもかまわない」といった違いをブラウザに伝える方法は残念ながらありません。
+しかし、デバイスの記憶容量が不足した場合、それらの不揮発領域はブラウザにより強制的に解放されます。「この動画はどうしても残したいけれど、このゲームは削除されてもかまわない」といった違いをブラウザに伝える方法は残念ながらありません。
 
 > To work around this, there's a proposed API, [Storage Durability](https://github.com/slightlyoff/StorageDurability/blob/master/explainer.md):
 
@@ -413,13 +413,18 @@ navigator.storageQuota.queryInfo("temporary").then(function(info) {
 ```js
 // From a page:
 navigator.requestStorageDurability().then(function() {
-  // Hurrah, your data is here to stay!
+  // > Hurrah, your data is here to stay!
+  // この時点でオリジンのデータは永続的(durable)になりました
 })
 ```
 
-Of course, the user has to grant permission. Making the user part of this flow is important, as we can now expect them to be in control of deletion. If their device comes under storage pressure, and clearing non-essential data doesn't solve it, the user gets to make a judgement call on which items to keep and remove.
+> Of course, the user has to grant permission. Making the user part of this flow is important, as we can now expect them to be in control of deletion. If their device comes under storage pressure, and clearing non-essential data doesn't solve it, the user gets to make a judgement call on which items to keep and remove.
 
-For this to work, it requires operating systems to treat "durable" origins as equivalent to native apps in their breakdowns of storage usage, rather than reporting the browser as a single item.
+もちろん、データを永続的(durable)にするためにはユーザーの許可を得る必要があります。そうすることで、永続的なデータを削除しなければいけなくなったときに、ユーザにどのリソースを削除するか判断を委ねることができるからです。デバイスの記憶容量が不足した場合、ブラウザは永続的でないデータを削除して、それでも足りない場合、どのリソースを削除してどれを残すか、ユーザーに問い合わせます。
+
+> For this to work, it requires operating systems to treat "durable" origins as equivalent to native apps in their breakdowns of storage usage, rather than reporting the browser as a single item.
+
+「永続的(durable)」と指定されたデータは、内部的にはオペレーティングシステムにより、ネイティブアプリと同等の記憶領域に分類されます。それにより、従来のブラウザ全体で単一とする分類とは違い、オリジンごとにデータの管理が可能になります。
 
 > ##Serving suggestions - responding to requests
 
