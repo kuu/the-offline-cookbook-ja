@@ -586,7 +586,7 @@ self.addEventListener('fetch', function(event) {
 
 > However, this method has flaws. If the user has an intermittent or slow connection they'll have to wait for the network to fail before they get the perfectly acceptable content already on their device. This can take an extremely long time and is a frustrating user experience. See the next pattern, ["Cache then network"](#cache-then-network), for a better solution.
 
-しかしながら、このパターンには欠陥があります。もしユーザーのネットワーク接続が低速もしくは途切れがちである場合、提示可能なコンテンツがデバイス上に存在するのにもかかわらず、ネットワークからの取得が失敗するまで待たないといけません。場合によってはユーザーは非常に長い間待たされるかもしれません。これに対する解決策としては次の[「キャッシュから取得してさらにネットワークからも取得する」](#cache-then-network)を参照ください。
+しかしながら、このパターンには欠陥があります。もしユーザーのネットワーク接続が低速もしくは途切れがちである場合、表示可能なコンテンツがデバイス上に存在するのにもかかわらず、ネットワークからの取得が失敗するまで待たないといけません。場合によってはユーザーは非常に長い間待たされるかもしれません。これに対する解決策としては次の[「キャッシュから取得してさらにネットワークからも取得する」](#cache-then-network)を参照ください。
 
 ```js
 self.addEventListener('fetch', function(event) {
@@ -610,7 +610,7 @@ self.addEventListener('fetch', function(event) {
 
 > This requires the page to make two requests, one to the cache, one to the network. The idea is to show the cached data first, then update the page when/if the network data arrives.
 
-このパターンではキャッシュとネットワークの両方のリクエストを同時に発行します。基本的なアイデアとしては、キャッシュから取得したリソースをまず提示して、もしネットワークからも取得できた場合は、後からそのリソースでページの内容を差し替えます。
+このパターンではキャッシュとネットワークの両方のリクエストを同時に発行します。基本的なアイデアとしては、キャッシュから取得したリソースをまず表示して、もしネットワークからも取得できた場合は、後からそのリソースでページの内容を差し替えます。
 
 > Sometimes you can just replace the current data when new data arrives (e.g. game leaderboard), but that can be disruptive with larger pieces of content. Basically, don't "disappear" something the user may be reading or interacting with.
 
