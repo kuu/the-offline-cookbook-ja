@@ -445,7 +445,7 @@ navigator.requestStorageDurability().then(function() {
 
 > Of course, the user has to grant permission. Making the user part of this flow is important, as we can now expect them to be in control of deletion. If their device comes under storage pressure, and clearing non-essential data doesn't solve it, the user gets to make a judgement call on which items to keep and remove.
 
-もちろん、データを永続的（durable）にするためにはユーザーの許可を得る必要があります。そうすることで、永続的なデータを削除しなければいけなくなったときに、ユーザにどのリソースを削除するか判断を委ねることができるからです。デバイスの記憶容量が不足した場合、ブラウザは永続的でないデータを削除して、それでも足りない場合、どのリソースを削除してどれを残すか、ユーザーに問い合わせます。
+もちろん、データを永続的にするためにはユーザーの許可を得る必要があります。そうすることで、永続的なデータを削除しなければいけなくなったときに、ユーザにどのリソースを削除するか判断を委ねることができるからです。デバイスの記憶容量が不足した場合、ブラウザは永続的でないデータを削除して、それでも足りない場合、どのリソースを削除してどれを残すか、ユーザーに問い合わせます。
 
 > For this to work, it requires operating systems to treat "durable" origins as equivalent to native apps in their breakdowns of storage usage, rather than reporting the browser as a single item.
 
