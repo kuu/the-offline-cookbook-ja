@@ -439,7 +439,7 @@ navigator.storageQuota.queryInfo("temporary").then(function(info) {
 // Webページのコード：
 navigator.requestStorageDurability().then(function() {
   // > Hurrah, your data is here to stay!
-  // 万歳！これでこのオリジンのデータは強制的に削除されなくなりました。
+  // 万歳！これでこのオリジンのデータは強制的に解放されなくなりました。
 })
 ```
 
