@@ -777,14 +777,23 @@ self.addEventListener('fetch', function(event) {
 
 ##<a name="putting-it-together"></a>まとめ
 
-You don't have to pick one of these methods, you'll likely use many of them depending on request URL. For example, [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) uses:
+> You don't have to pick one of these methods, you'll likely use many of them depending on request URL. For example, [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) uses:
 
-* [Cache on install](#on-install-as-a-dependency), for the static UI and behaviour
-* [Cache on network response](#on-network-response), for the Flickr images and data
-* [Fetch from cache, falling back to network](#cache-falling-back-to-network), for most requests
-* [Fetch from cache, then network](#cache-then-network), for the Flickr search results
+ここで紹介したパターンのどれかひとつを選択しなければいけないわけではありません。おそらく、リクエストされたURLによって、これらのパターンのいくつかを使い分けることになると思います。例えばサンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)は以下のパターンを使用しています。
 
-Just look at the request and decide what to do:
+> * [Cache on install](#on-install-as-a-dependency), for the static UI and behaviour
+> * [Cache on network response](#on-network-response), for the Flickr images and data
+> * [Fetch from cache, falling back to network](#cache-falling-back-to-network), for most requests
+> * [Fetch from cache, then network](#cache-then-network), for the Flickr search results
+
+* 静的なアセットとスクリプト：[`install`イベント時に依存リソースをキャッシュに保存する](#on-install-as-a-dependency)
+* Flickrの画像とデータ：[`fetch`イベント時にレスポンスをキャッシュに保存する](#on-network-response)
+* その他ほとんどのリソース：[キャッシュになければネットワークから取得する](#cache-falling-back-to-network)
+* Flickrの検索結果：[キャッシュから取得してさらにネットワークからも取得する](#cache-then-network)
+
+> Just look at the request and decide what to do:
+
+以下のように、リクエストの内容を見てどのパターンを適用するか決めています。
 
 ```js
 self.addEventListener('fetch', function(event) {
