@@ -221,8 +221,10 @@ document.querySelector('.cache-article').addEventListener('click', function(even
   var id = this.dataset.articleId;
   caches.open('mysite-article-' + id).then(function(cache) {
     fetch('/get-article-urls?id=' + id).then(function(response) {
-      // /get-article-urls returns a JSON-encoded array of
-      // resource URLs that a given article depends on
+      // > /get-article-urls returns a JSON-encoded array of
+      // > resource URLs that a given article depends on
+      // /get=article-urlsは、指定した記事が依存するすべての
+      // リソースのURLを含む配列をJSONの形式で返します。
       return response.json();
     }).then(function(urls) {
       cache.addAll(urls);
