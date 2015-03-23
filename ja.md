@@ -430,7 +430,9 @@ navigator.requestStorageDurability().then(function() {
 
 ##<a name="serving-suggestions-responding-to-requests"></a>リクエスト処理の８つのパターン
 
-It doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:
+> It doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:
+
+どれだけキャッシュに保存しても、それらのキャッシュをいつ／どのように読み出すか、Service Workerに伝えてやらなければ使われないままです。ここではリクエスト処理に関して、いくつかの考えられるパターンを挙げます。
 
 ###<a name="cache-only"></a>Cache only
 
