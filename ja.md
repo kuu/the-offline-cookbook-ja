@@ -14,7 +14,7 @@ _投稿日：2014年12月9日_
 
 > With ServiceWorker ([intro](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)) we gave up trying to solve offline, and gave developers the moving parts to go solve it themselves. It gives you control over caching and how requests are handled. That means you get to create your own patterns. Let's take a look at a few possible patterns in isolation, but in practice you'll likely use many of them in tandem depending on URL & context.
 
-そして[Service Worker](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)が登場しました。Service Workerは、オフライン機能そのものを提供するのではなく、アプリケーションの開発者が自身で問題を解決できるように、低レベルな部品を提供します。それにより、開発者はキャッシュやリクエスト処理をより細かくコントロールできるようになったのです。それはまた、開発者自身がデザインパターンを考えなければならないことを意味します。この記事では、考えられるパターンをひとつづつ取り上げて見ていきます。実際にはアプリケーションのURLやコンテキストに基づいて、複数のパターンを組み合わせて使用することになると思います。
+そして[Service Worker](http://www.html5rocks.com/ja/tutorials/service-worker/introduction/)が登場しました。Service Workerは、オフライン機能そのものを提供するのではなく、アプリケーションの開発者が自身で問題を解決できるように、低レベルな部品を提供します。それにより、開発者はキャッシュやリクエスト処理をより細かくコントロールできるようになったのです。それはまた、開発者自身がデザインパターンを考えなければならないことを意味します。この記事では、考えられるパターンをひとつづつ取り上げて見ていきます。実際にはアプリケーションのURLやコンテキストに基づいて、複数のパターンを組み合わせて適用することになると思います。
 
 > All code examples work today in [Chrome 40 beta](https://www.google.com/chrome/browser/beta.html) with the [cache polyfill](https://github.com/coonsta/cache-polyfill), unless otherwise noted. This stuff will land into the stable version January/February 2015 barring any emergencies, so it won't be long until millions of real users can benefit from this stuff.
 
@@ -22,7 +22,7 @@ _投稿日：2014年12月9日_
 
 > For a working demo of some of these patterns, see [Trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/), and [this video](https://www.youtube.com/watch?v=px-J9Ghvcx4) showing the performance impact.
 
-また、本記事で紹介するいくつかのパターンを実際に使ったアプリケーション[Trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)と、そのパフォーマンスの改善結果がわかる[動画](https://www.youtube.com/watch?v=px-J9Ghvcx4)も参照ください。
+また、本記事で紹介するいくつかのパターンを実際に適用したアプリケーション[Trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)と、そのパフォーマンスの改善結果がわかる[動画](https://www.youtube.com/watch?v=px-J9Ghvcx4)も参照ください。
 
 > **Contents**
 
@@ -578,7 +578,7 @@ self.addEventListener('fetch', function(event) {
 
 > **Ideal for:** A quick-fix for resources that update frequently, outside of the "version" of the site. E.g. articles, avatars, social media timelines, game leader boards.
 
-**このパターンが適するのは：**頻繁に更新されるリソースが取得できなかった場合の応急処置としてキャッシュから取得する。これらはアプリケーションの特定のバージョンに必須のリソースではない。（例：ブログ記事、アバター、ソーシャルメディアのタイムライン、ゲームのリーダーボード等）
+**このパターンが適するのは：**頻繁に更新されるリソース（例：ブログ記事、アバター、ソーシャルメディアのタイムライン、ゲームのリーダーボード等）が取得できなかった場合の応急処置としてキャッシュから取得する。これらはアプリケーションの特定のバージョンに必須のリソースではない。
 
 > This means you give online users the most up-to-date content, but offline users get an older cached version. If the network request succeeds you'll most-likely want to [update the cache entry](#on-network-response).
 
@@ -604,22 +604,33 @@ self.addEventListener('fetch', function(event) {
 
 ![Cache then network](images/14-Cache-then-network.png)
 
-**Ideal for:** Content that updates frequently. E.g. articles, social media timelines, game leaderboards.
+> **Ideal for:** Content that updates frequently. E.g. articles, social media timelines, game leaderboards.
 
-This requires the page to make two requests, one to the cache, one to the network. The idea is to show the cached data first, then update the page when/if the network data arrives.
+**このパターンが適するのは：**頻繁に更新されるリソース（例：ブログ記事、ソーシャルメディアのタイムライン、ゲームのリーダーボード等）
 
-Sometimes you can just replace the current data when new data arrives (e.g. game leaderboard), but that can be disruptive with larger pieces of content. Basically, don't "disappear" something the user may be reading or interacting with.
+> This requires the page to make two requests, one to the cache, one to the network. The idea is to show the cached data first, then update the page when/if the network data arrives.
 
-Twitter adds the new content above the old content & adjusts the scroll position so the user is uninterrupted. This is possible because Twitter mostly retains a mostly-linear order to content. I copied this pattern for [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) to get content on screen as fast as possible, but still display up-to-date content once it arrives.
+このパターンではキャッシュとネットワークの両方のリクエストを同時に発行します。基本的なアイデアとしては、キャッシュから取得したリソースをまず提示して、もしネットワークからも取得できた場合は後からそのリソースでページを更新します。
 
-**Code in the page:**
+> Sometimes you can just replace the current data when new data arrives (e.g. game leaderboard), but that can be disruptive with larger pieces of content. Basically, don't "disappear" something the user may be reading or interacting with.
+
+ゲームのリーダーボードのような小さなリソースであれば、ページの内容を差し替えてもさほど影響はありませんが、大きいリソースの差し替えはユーザー体験を損ねる場合があります。原則としてユーザーが視聴中のコンテンツや入力途中のデータを消去することはやめましょう。
+
+> Twitter adds the new content above the old content & adjusts the scroll position so the user is uninterrupted. This is possible because Twitter mostly retains a mostly-linear order to content. I copied this pattern for [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) to get content on screen as fast as possible, but still display up-to-date content once it arrives.
+
+Twitterは古いコンテンツの上に新しいコンテンツを表示して、スクロール位置を調整するため、ユーザーがツイートを読んでいる最中に邪魔が入ることはありません。これは、Twitterのコンテンツはほとんどリニアなデータ構造で順番が管理されているからです。サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、コンテンツの表示時間を短く、かつ最新のコンテンツを表示するために、このパターンを適用しています。
+
+> **Code in the page:**
+
+**Webページのコード**
 
 ```js
 var networkDataReceived = false;
 
 startSpinner();
 
-// fetch fresh data
+// > fetch fresh data
+// 最新のリソースをネットワークから取得する
 var networkUpdate = fetch('/data.json').then(function(response) {
   return response.json();
 }).then(function(data) {
@@ -627,24 +638,31 @@ var networkUpdate = fetch('/data.json').then(function(response) {
   updatePage();
 });
 
-// fetch cached data
+// > fetch cached data
+// キャッシュからも取得する
 caches.match('/data.json').then(function(response) {
   if (!response) throw Error("No data");
   return response.json();
 }).then(function(data) {
-  // don't overwrite newer network data
+  // > don't overwrite newer network data
+  // ネットワークから取得済みの場合はページ更新しない
   if (!networkDataReceived) {
     updatePage(data);
   }
 }).catch(function() {
-  // we didn't get cached data, the network is our last hope:
+  // > we didn't get cached data, the network is our last hope:
+  // キャッシュから取得できなかった場合はネットワークからの取得に頼るしかない
   return networkUpdate;
 }).catch(showErrorMessage).then(stopSpinner);
 ```
 
-**Code in the ServiceWorker:**
+> **Code in the ServiceWorker:**
 
-We always go to the network & update a cache as we go.
+**Service Workerのコード**
+
+> We always go to the network & update a cache as we go.
+
+常にネットワークからリソースを取得して、キャッシュを更新しています。
 
 ```js
 self.addEventListener('fetch', function(event) {
@@ -659,9 +677,13 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-The above doesn't work in Chrome yet, as we've yet to expose fetch and caches to pages ([ticket #1](https://code.google.com/p/chromium/issues/detail?id=436770), [ticket #2](https://code.google.com/p/chromium/issues/detail?id=439389)).
+> The above doesn't work in Chrome yet, as we've yet to expose fetch and caches to pages ([ticket #1](https://code.google.com/p/chromium/issues/detail?id=436770), [ticket #2](https://code.google.com/p/chromium/issues/detail?id=439389)).
 
-In [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I worked around this by using [XHR instead of fetch](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/utils.js#L3), and abusing the Accept header to tell the ServiceWorker where to get the result from ([page code](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/index.js#L70), [ServiceWorker code](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L61)).
+`fetch`と`cache`はChromeでまだ実装されていないため、上記のコードは動きません。関連するチケットは、[ticket #1](https://code.google.com/p/chromium/issues/detail?id=436770)および[ticket #2](https://code.google.com/p/chromium/issues/detail?id=439389)です。（※訳注：[`fetch` API](http://updates.html5rocks.com/2015/03/introduction-to-fetch)は Chrome 42で実装されました。）
+
+> In [trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/) I worked around this by using [XHR instead of fetch](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/utils.js#L3), and abusing the Accept header to tell the ServiceWorker where to get the result from ([page code](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/index.js#L70), [ServiceWorker code](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L61)).
+
+サンプルアプリケーションの[trained-to-thrill](https://jakearchibald.github.io/trained-to-thrill/)では、`fetch API`を使う代わりに[XHRを使用しました](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/utils.js#L3)。そこでは、Service Workerにリソースの取得元を伝えるために`Accept`ヘッダーを利用したハックを行っています。（[Webページのコード](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/index.js#L70)、[Service Workerのコード](https://github.com/jakearchibald/trained-to-thrill/blob/3291dd40923346e3cc9c83ae527004d502e0464f/www/static/js-unmin/sw/index.js#L61)）
 
 > ###Generic fallback
 
