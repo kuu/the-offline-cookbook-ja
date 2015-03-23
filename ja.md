@@ -76,7 +76,7 @@ _投稿日：2014年12月9日_
 
 > ServiceWorker lets you handle requests independently from caching, so we'll look at them separately. First up, caching, when should it be done?
 
-Service Workerでは、リクエストとキャッシュは独立したものとして扱われます。本記事でもそれらを分けて説明します。まずはキャッシュに関して、どのタイミングでキャッシュを更新するかという点に着目し、いくつかの考えられるパターンを挙げます。
+Service Workerでは、リクエストとキャッシュは独立したものとして扱われます。本記事でもそれらを分けて説明します。まずはキャッシュに関して、どのタイミングでキャッシュを更新するかという点に着目し、考えられる８つのパターンを挙げます。
 
 > ###On install - as a dependency
 
@@ -449,7 +449,7 @@ navigator.requestStorageDurability().then(function() {
 
 > It doesn't matter how much caching you do, the ServiceWorker won't use the cache unless you tell it when & how. Here are a few patterns for handling requests:
 
-どれだけキャッシュに保存しても、それらのキャッシュをいつ／どのように読み出すか、Service Workerに伝えてやらなければ使われないままです。ここではリクエスト処理に関して、いくつかの考えられるパターンを挙げます。
+どれだけキャッシュに保存しても、それらのキャッシュをいつ／どのように読み出すか、Service Workerに伝えてやらなければ使われないままです。ここではリクエスト処理に関して、考えられる８つのパターンを挙げます。
 
 > ###Cache only
 
