@@ -552,7 +552,7 @@ self.addEventListener('fetch', function(event) {
 // Promise.race はいずれかのアイテムが成功するよりも先に
 // あるアイテムが失敗した時点でrejectされてしまうので、
 // ここでの要件（どのアイテムが最初に成功したか知りたい）を満たしません。
-// 以下に独自のrace関数を実装しました。
+// よって以下に独自のrace関数を実装しました。
 function properRace(promises) {
   // we implement by inverting Promise.all
   Promise.all(
