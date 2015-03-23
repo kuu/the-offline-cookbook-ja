@@ -794,7 +794,7 @@ self.addEventListener('fetch', function(event) {
 
 > Just look at the request and decide what to do:
 
-以下のように、リクエストの内容を見てどのパターンを適用するか決めています。
+基本的に`fetch`イベントのハンドラで、以下のようにリクエストの内容を見て最適なパターンを適用します。
 
 ```js
 self.addEventListener('fetch', function(event) {
