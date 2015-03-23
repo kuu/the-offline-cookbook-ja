@@ -338,7 +338,7 @@ self.addEventListener('fetch', function(event) {
 
 > Without a connection, Twitter fails to provide the content relating to the push message. Tapping it does remove the notification however, leaving the user with less information than before they tapped. Don't do this!
 
-ネットワークに繋がっていない状態だと、TwitterはPush通知のコンテンツを表示できません。しかも、タップすることでPush通知は削除されます。これではPush通知をタップしたことでユーザーは情報を失ったことになります。このようなUIにならないよう気をつけてください。
+ネットワークに繋がっていない状態だと、TwitterはPush通知のコンテンツを表示できません。しかも、タップすることでPush通知は削除されてしまいます。これではPush通知をタップしたことでユーザーは情報を失ったことになります。このようなUIにならないよう気をつけてください。
 
 > This code updates caches before showing a notification:
 
