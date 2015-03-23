@@ -67,7 +67,7 @@ _投稿日：2014年12月9日_
  5. [パターン５：ネットワークから取得できなければキャッシュから取得する](#network-falling-back-to-cache)
  6. [パターン６：キャッシュから取得してさらにネットワークからも取得する](#cache-then-network)
  7. [パターン７：キャッシュからもネットワークからも取得できなかった場合にデフォルトコンテンツを表示する](#generic-fallback)
- 8. [パターン８：ServiceWorker-side templating](#serviceworker-side-templating)
+ 8. [パターン８：Service Workerサイド・テンプレート](#serviceworker-side-templating)
 4. [まとめ](#putting-it-together)
 
 > ##The cache machine - when to store resources
@@ -733,13 +733,17 @@ self.addEventListener('fetch', function(event) {
 
 > ###ServiceWorker-side templating
 
-###<a name="serviceworker-side-templating"></a>ServiceWorker-side templating
+###<a name="serviceworker-side-templating"></a>パターン８：Service Workerサイド・テンプレート
 
 ![ServiceWorker-side templating](images/16-ServiceWorker-side-templating.png)
 
-**Ideal for:** Pages that cannot have their server response cached.
+> **Ideal for:** Pages that cannot have their server response cached.
 
-[Rendering pages on the server makes things fast](http://jakearchibald.com/2013/progressive-enhancement-is-faster/), but that can mean including state data that may not make sense in a cache, e.g. "Logged in as…". If your page is controlled by a ServiceWorker, you may instead choose to request JSON data along with a template, and render that instead.
+**このパターンが適するのは：**サーバーサイドレンダリングにより出力されたページ等、キャッシュしても意味がないコンテンツ
+
+> [Rendering pages on the server makes things fast](http://jakearchibald.com/2013/progressive-enhancement-is-faster/), but that can mean including state data that may not make sense in a cache, e.g. "Logged in as…". If your page is controlled by a ServiceWorker, you may instead choose to request JSON data along with a template, and render that instead.
+
+[サーバーサイドレンダリングにより、ページの初期表示は速くなります](http://jakearchibald.com/2013/progressive-enhancement-is-faster/)。しかしながら、「XXXとしてログインしています」のような、状態に依存したデータをキャッシュしてもあまり意味がありません。そこで、Service Workerを使います。ページをリクエストする代わりにテンプレートとJSONデータを取得し、Service Worker自身がレンダリングを行います。
 
 ```js
 importScripts('templating-engine.js');
