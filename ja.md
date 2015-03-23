@@ -411,7 +411,7 @@ self.addEventListener('sync', function(event) {
 
 > Your origin is given a certain amount of free space to do what it wants with. That free space is shared between all origin storage: LocalStorage, IndexedDB, Filesystem, and of course Caches.
 
-あるサイズの不揮発領域がアプリケーションのオリジンごとに割り当てられます。ここで不揮発領域と言っているのは、LocalStorage、IndexedDB、Filesystem、そしてキャッシュ等を指しますが、これらは他のオリジンと共用されます。
+あるサイズの不揮発領域がアプリケーションのオリジンごとに割り当てられます。ここで不揮発領域と言っているのは、LocalStorage、IndexedDB、Filesystem、キャッシュ等をあわせたものですが、これらは他のオリジンと共用されます。
 
 > The amount you get isn't spec'd, it will differ depending on device and storage conditions. You can find out how much you've got via:
 
