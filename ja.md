@@ -554,17 +554,19 @@ self.addEventListener('fetch', function(event) {
 // ここでの要件（どのアイテムが最初に成功したか知りたい）を満たしません。
 // よって以下に独自のrace関数を実装しました。
 function properRace(promises) {
-  // we implement by inverting Promise.all
+  // > we implement by inverting Promise.all
+  // この関数はPromise.allを反転することで実装されています
   Promise.all(
     promises.map(function(promise) {
-      // for each promise, cast it, then swap around rejection & fulfill
+      // > for each promise, cast it, then swap around rejection & fulfill
+      // すべてのPromiseオブジェクトでrejectとfulfillを交換しています
       return Promise.resolve(promise).then(function(val) {
         throw val;
       }, function(err) {
         return err;
       });
     })
-  ).then(function(errs) { // then swap it back
+  ).then(function(errs) { // then swap it back 最後にさらに反転して元に戻します
     throw Error("Proper race: none fulfilled");
   }, function(val) {
     return val;
