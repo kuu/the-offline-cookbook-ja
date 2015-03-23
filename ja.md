@@ -245,7 +245,7 @@ document.querySelector('.cache-article').addEventListener('click', function(even
 
 > **Ideal for:** Frequently updating resources such as a user's inbox, or article contents. Also useful for non-essential content such as avatars, but care is needed.
 
-**このパターンが適するのは：**頻繁に更新されるリソース（例：メールの受信箱やブログ記事）、もしくはアプリケーションに必須ではないコンテンツ（例：アバター）等。ただし、注意が必要。（後述）
+**このパターンが適するのは：**頻繁に更新されるリソース（例：メールの受信箱やブログ記事）、もしくはアプリケーションに必須ではないコンテンツ（例：アバター）等。ただし注意が必要。（後述）
 
 > If a request doesn't match anything in the cache, get it from the network, send it to the page & add it to the cache at the same time.
 
