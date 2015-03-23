@@ -387,7 +387,11 @@ self.addEventListener('sync', function(event) {
 
 Your origin is given a certain amount of free space to do what it wants with. That free space is shared between all origin storage: LocalStorage, IndexedDB, Filesystem, and of course Caches.
 
-The amount you get isn't spec'd, it will differ depending on device and storage conditions. You can find out how much you've got via:
+あるサイズの不揮発領域がアプリケーションのオリジンごとに割り当てられています。ここで不揮発領域と言っているのは、LocalStorage、IndexedDB、Filesystem、そしてキャッシュ等を指しますが、これらは他のオリジンと共用されます。
+
+> The amount you get isn't spec'd, it will differ depending on device and storage conditions. You can find out how much you've got via:
+
+利用可能な不揮発領域の具体的なサイズは仕様で定義されておらず、機器や状況によって変わりますが、アプリケーションは以下のようにして利用可能なサイズを確認できます。
 
 ```js
 navigator.storageQuota.queryInfo("temporary").then(function(info) {
@@ -398,9 +402,13 @@ navigator.storageQuota.queryInfo("temporary").then(function(info) {
 });
 ```
 
-However, like all browser storage, the browser is free to throw it away if the device becomes under storage pressure. Unfortunately the browser can't tell the different between those movies you want to keep at all costs, and the game you don't really care about.
+> However, like all browser storage, the browser is free to throw it away if the device becomes under storage pressure. Unfortunately the browser can't tell the different between those movies you want to keep at all costs, and the game you don't really care about.
 
-To work around this, there's a proposed API, [Storage Durability](https://github.com/slightlyoff/StorageDurability/blob/master/explainer.md):
+しかし、機器のリソースが不足した場合、それらの不揮発領域はブラウザにより強制的に解放されます。「この動画はどうしても残したいけれど、このゲームは削除されてもかまわない」といった違いをブラウザに伝える方法は残念ながらありません。
+
+> To work around this, there's a proposed API, [Storage Durability](https://github.com/slightlyoff/StorageDurability/blob/master/explainer.md):
+
+こういった問題に対処すべく、[Storage Durability](https://github.com/slightlyoff/StorageDurability/blob/master/explainer.md) APIが提案されました。
 
 ```js
 // From a page:
