@@ -496,8 +496,10 @@ self.addEventListener('fetch', function(event) {
 ```js
 self.addEventListener('fetch', function(event) {
   event.respondWith(fetch(event.request));
-  // or simply don't call event.respondWith, which
-  // will result in default browser behaviour
+  // > or simply don't call event.respondWith, which
+  // > will result in default browser behaviour
+  // もしくは単にevent.respondWithを呼びださなければ
+  // ブラウザのデフォルトの動作（ネットワークから取得）となります。
 });
 ```
 
