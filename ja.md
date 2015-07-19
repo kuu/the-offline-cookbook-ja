@@ -181,7 +181,7 @@ self.addEventListener('activate', function(event) {
           // > but remember that caches are shared across
           // > the whole origin
           // キャッシュから削除したい場合trueを返します。
-          // キャッシュはすべてのオリジンで共有されている
+          // キャッシュはオリジン全体で共有されている
           // ことに注意してください。
         }).map(function(cacheName) {
           return caches.delete(cacheName);
